@@ -4,7 +4,7 @@ import apsd.interfaces.containers.iterators.BackwardIterator;
 import apsd.interfaces.containers.iterators.ForwardIterator;
 import apsd.interfaces.traits.Predicate;
 
-import java.util.Objects; //! TODO verificare che si possa usare
+import java.util.Objects; //! Ipotizzando che si possa usare
 
 /** Interface: TraversableContainer con supporto all'iterazione. */
 public interface IterableContainer<Data> extends TraversableContainer<Data> {
@@ -22,14 +22,13 @@ public interface IterableContainer<Data> extends TraversableContainer<Data> {
     ForwardIterator<Data> it2 = other.FIterator();
 
     while (it1.IsValid() && it2.IsValid()) {
-      if (!Objects.equals(it1.GetCurrent(), it2.GetCurrent()))
-        return false;
+      if (!Objects.equals(it1.GetCurrent(), it2.GetCurrent())) return false;
       it1.Next();
       it2.Next();
     }
     return true;
   }
-  //! TODO se non si può usare Objects, sostituire while con:
+  //! In caso non si possa usare riga 7, sostituire while (24-29) con:
   /*
     while (it1.IsValid() && it2.IsValid()) {
       Data a = it1.GetCurrent();
