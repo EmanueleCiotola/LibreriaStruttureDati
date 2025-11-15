@@ -1,30 +1,58 @@
 package apsd.interfaces.containers.sequences;
 
-// import apsd.classes.utilities.Natural;
-// import apsd.interfaces.containers.base.MutableIterableContainer;
-// import apsd.interfaces.containers.iterators.MutableForwardIterator;
+import apsd.classes.utilities.Natural;
+import apsd.interfaces.containers.base.MutableIterableContainer;
+import apsd.interfaces.containers.iterators.MutableForwardIterator;
 
 /** Interface: Sequence & MutableIterableContainer con supporto alla scrittura tramite posizione. */
-public interface MutableSequence<Data> { // Must extend Sequence and MutableIterableContainer
+public interface MutableSequence<Data> extends Sequence<Data>, MutableIterableContainer<Data> {
 
-  // SetAt
+  default void SetAt(Data data, Natural position) {
+    long index = ExcIfOutOfBound(position);
+    MutableForwardIterator<Data> iterator = FIterator();
+    iterator.Next(index);
+    iterator.SetCurrent(data);
+  }
 
-  // GetNSetAt
+  default Data GetNSetAt(Data data, Natural position) {
+    long index = ExcIfOutOfBound(position);
+    MutableForwardIterator<Data> iterator = FIterator();
+    iterator.Next(index);
+    Data old = iterator.GetCurrent();
+    iterator.SetCurrent(data);
+    return old;
+  }
 
-  // SetFirst
+  default void SetFirst(Data data) { SetAt(data, Natural.ZERO); }
 
-  // GetNSetFirst
+  default Data GetNSetFirst(Data data) { return GetNSetAt(data, Natural.ZERO); }
 
-  // SetLast
+  default void SetLast(Data data) {
+    if (Size().IsZero()) throw new IndexOutOfBoundsException("SetLast on empty sequence"); //? in questo caso si potrebbe inserire l'elemento come primo della sequenza, ma per evitare comportamenti indesiderati escludo questa possibilità
+    SetAt(data, Size().Decrement());
+  }
 
-  // GetNSetLast
+  default Data GetNSetLast(Data data) {
+    if (Size().IsZero()) throw new IndexOutOfBoundsException("GetNSetLast on empty sequence");
+    return GetNSetAt(data, Size().Decrement());
+  }
 
-  // Swap
+  default void Swap(Natural pos1, Natural pos2) {
+    long idx1 = ExcIfOutOfBound(pos1);
+    long idx2 = ExcIfOutOfBound(pos2);
+    if (idx1 != idx2) {
+      Data d1 = GetAt(pos1);
+      Data d2 = GetAt(pos2);
+      SetAt(d2, pos1);
+      SetAt(d1, pos2);
+    }
+  }
 
   /* ************************************************************************ */
   /* Override specific member functions from Sequence                         */
   /* ************************************************************************ */
 
-  // ...
+  @Override
+  MutableSequence<Data> SubSequence(Natural from, Natural to);
 
 }
