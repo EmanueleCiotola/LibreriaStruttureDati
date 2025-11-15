@@ -63,7 +63,7 @@ public interface Vector<Data> extends ReallocableContainer, MutableSequence<Data
     long startIndex = ExcIfOutOfBound(start);
     long endIndex = ExcIfOutOfBound(end);
     if (startIndex > endIndex) throw new IllegalArgumentException("Start index cannot be greater than end index.");
-    return (Vector<Data>) SubSequence(start, end);
+    return (Vector<Data>) SubSequence(start, end); //TODO cast pericoloso e quasi sicuramente sbagliato
   }
 
   /* ************************************************************************ */
