@@ -1,17 +1,26 @@
 package apsd.interfaces.containers.collections;
 
-// import apsd.classes.utilities.Natural;
-// import apsd.interfaces.containers.sequences.InsertableAtSequence;
-// import apsd.interfaces.containers.sequences.MutableSequence;
+import apsd.classes.utilities.Natural;
+import apsd.interfaces.containers.sequences.InsertableAtSequence;
+import apsd.interfaces.containers.sequences.MutableSequence;
 
-public interface List<Data> { // Must extend MutableSequence, InsertableAtSequence, and Chain
+public interface List<Data> extends MutableSequence<Data>, InsertableAtSequence<Data>, Chain<Data> {
 
-  // SubList
+  default List<Data> SubList(Natural start, Natural end) {
+    long startIndex = ExcIfOutOfBound(start);
+    long endIndex = ExcIfOutOfBound(end);
+    if (startIndex > endIndex) throw new IllegalArgumentException("Start index cannot be greater than end index.");
+    return (List<Data>) SubSequence(start, end); //TODO verificare se va bene il cast potenzialmente pericoloso
+  }
 
   /* ************************************************************************ */
   /* Override specific member functions from ExtensibleContainer              */
   /* ************************************************************************ */
-
-  // ...
+  
+  @Override
+  default boolean Insert(Data data){
+    InsertAt(data, Size());
+    return true;
+  }
 
 }
