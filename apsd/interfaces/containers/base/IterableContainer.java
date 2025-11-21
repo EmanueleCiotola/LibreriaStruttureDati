@@ -18,7 +18,9 @@ public interface IterableContainer<Data> extends TraversableContainer<Data> {
     ForwardIterator<Data> it1 = FIterator();
     ForwardIterator<Data> it2 = other.FIterator();
 
-    while (it1.IsValid() && it2.IsValid()) if (!it1.DataNNext().equals(it2.DataNNext())) return false;
+    while (it1.IsValid() && it2.IsValid()) {
+      if (!it1.DataNNext().equals(it2.DataNNext())) return false;
+    }
     
     return true;
   }
