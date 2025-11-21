@@ -20,7 +20,7 @@ public interface BackwardIterator<Data> extends Iterator<Data> {
 
   default boolean ForEachBackward(Predicate<Data> fun) {
     if (fun == null) throw new NullPointerException("Predicate cannot be null!");
-    while (IsValid()) if (fun.Apply(DataNPrev())) { return true; }
+    while (IsValid()) if (fun.Apply(DataNPrev())) return true;
     return false;
   }
 

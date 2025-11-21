@@ -15,6 +15,7 @@ public interface DynVector<Data> extends ResizableContainer, InsertableAtSequenc
     if (position == null) throw new NullPointerException("Natural number cannot be null!");
     if (position.compareTo(Size()) > 0) throw new IndexOutOfBoundsException("Index out of bounds: " + position + "; Size: " + Size() + "!"); //? controlla se posizione > size affidando conversioni a compareTo di Natural. Non uso ExcIfOutOfBound(position) perché per InsertAt è lecito usare position == Size()
     ShiftRight(position, Natural.ONE); //? ShiftRight espande automaticamente quando necessario
+    //TODO se cambio le shift come ha fatto il prof, devo espandere manualmente prima di fare Shift
     SetAt(data, position);
   }
 
@@ -82,6 +83,6 @@ public interface DynVector<Data> extends ResizableContainer, InsertableAtSequenc
   /* ************************************************************************ */
 
   @Override
-  Natural Size();
+  abstract Natural Size();
 
 }

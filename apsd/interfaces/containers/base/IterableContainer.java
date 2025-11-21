@@ -4,8 +4,6 @@ import apsd.interfaces.containers.iterators.BackwardIterator;
 import apsd.interfaces.containers.iterators.ForwardIterator;
 import apsd.interfaces.traits.Predicate;
 
-import java.util.Objects; //! Ipotizzando che si possa usare
-
 /** Interface: TraversableContainer con supporto all'iterazione. */
 public interface IterableContainer<Data> extends TraversableContainer<Data> {
 
@@ -14,34 +12,16 @@ public interface IterableContainer<Data> extends TraversableContainer<Data> {
   BackwardIterator<Data> BIterator();
 
   default boolean IsEqual(IterableContainer<Data> other) {
-    if (other == null) return false;
+    if (other == null || !Size().equals(other.Size())) return false;
     if (this == other) return true;
-    if (!Size().equals(other.Size())) return false;
 
     ForwardIterator<Data> it1 = FIterator();
     ForwardIterator<Data> it2 = other.FIterator();
 
-    while (it1.IsValid() && it2.IsValid()) {
-      if (!Objects.equals(it1.GetCurrent(), it2.GetCurrent())) return false;
-      it1.Next();
-      it2.Next();
-    }
+    while (it1.IsValid() && it2.IsValid()) if (!it1.DataNNext().equals(it2.DataNNext())) return false;
+    
     return true;
   }
-  //! In caso non si possa usare riga 7, sostituire while (24-29) con:
-  /*
-    while (it1.IsValid() && it2.IsValid()) {
-      Data a = it1.GetCurrent();
-      Data b = it2.GetCurrent();
-      if (a == null) {
-        if (b != null) return false;
-      } else {
-        if (!a.equals(b)) return false;
-      }
-      it1.Next();
-      it2.Next();
-    }
-  */
 
   /* ************************************************************************ */
   /* Override specific member functions from TraversableContainer             */

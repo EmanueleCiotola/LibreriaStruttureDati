@@ -5,20 +5,11 @@ import apsd.interfaces.containers.sequences.RemovableAtSequence;
 
 public interface Chain<Data> extends RemovableAtSequence<Data>, Set<Data> {
 
-  default boolean InsertIfAbsent(Data data) {
-    if (!Exists(data)) return Insert(data);
-    return false;
-  }
+  default boolean InsertIfAbsent(Data data) { return !Exists(data) ? Insert(data) : false; }
 
-  default void RemoveOccurrences(Data data){
-    while(Exists(data)){
-      Remove(data);
-    }
-  }
+  default void RemoveOccurrences(Data data) { Filter(elem -> !elem.equals(data)); }
 
-  default Chain<Data> SubChain(Natural from, Natural to) {
-    return (Chain<Data>) SubSequence(from, to); //TODO verificare se va bene il cast potenzialmente pericoloso
-  }
+  default Chain<Data> SubChain(Natural from, Natural to) { return (Chain<Data>) SubSequence(from, to); }
 
   /* ************************************************************************ */
   /* Override specific member functions from Sequence                         */

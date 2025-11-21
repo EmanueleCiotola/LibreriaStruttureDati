@@ -25,19 +25,12 @@ public interface Sequence<Data> extends IterableContainer<Data> {
   }
 
   default Natural Search(Data data) {
-    final Box<Long> index = new Box<>(0L);
-    final Box<Boolean> found = new Box<>(false);
-
-    TraverseForward(elem -> {
-      if (data == null ? elem == null : data.equals(elem)) {
-        found.Set(true);
-        return true;
-      }
-      index.Set(index.Get() + 1);
-      return false;
-    });
-
-    return found.Get() ? Natural.Of(index.Get()) : null;
+    final Box<Long> idx = new Box<>(-1L);
+    if (TraverseForward(elm -> {
+      idx.Set(idx.Get() + 1);
+      return (elm == null && data == null) || (elm.equals(data) &&elm != null && data != null);
+    })) return Natural.Of(idx.Get());
+    return null;
   }
 
   default boolean IsInBound(Natural position) {

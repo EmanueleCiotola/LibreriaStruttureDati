@@ -32,7 +32,7 @@ public interface SortedSequence<Data extends Comparable<? super Data>> extends S
       long mid = (lower + higher) >>> 1; //? fa shift logico destro. Calcola quindi l’equivalente di (lower + higher) / 2 bitwise, ma evita possibile overflow
       Natural midNat = Natural.Of(mid);
       Data midVal = GetAt(midNat);
-      int cmp = midVal.compareTo(data); //TODO verificare che si possa usare il compareTo
+      int cmp = midVal.compareTo(data);
       if (cmp == 0) return Natural.Of(mid);
       if (cmp < 0) lower = mid + 1;
       else higher = mid - 1;

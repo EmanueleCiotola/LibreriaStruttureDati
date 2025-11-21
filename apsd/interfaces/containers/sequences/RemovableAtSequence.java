@@ -17,23 +17,23 @@ public interface RemovableAtSequence<Data> extends Sequence<Data> {
   Data AtNRemove(Natural position);
 
   default void RemoveFirst() {
-    if (Size().IsZero()) return;
+    if (Size().IsZero()) return; //TODO il prof non lo mette, decido quando implemento AtNRemove
     AtNRemove(Natural.ZERO);
   }
 
   default Data FirstNRemove() {
-    if (Size().IsZero()) return null;
+    if (Size().IsZero()) return null; //TODO il prof non lo mette, decido quando implemento AtNRemove
     return AtNRemove(Natural.ZERO);
   }
 
   default void RemoveLast() {
     if (Size().IsZero()) return; //? a differenza di SetLast (MutableSequence), in questo caso non ha senso lanciare un'eccezione
-    AtNRemove(Size().Decrement());
+    AtNRemove(Size().Decrement()); //TODO diverso, vedere da foto
   }
 
   default Data LastNRemove() {
     if (Size().IsZero()) return null;
-    return AtNRemove(Size().Decrement());
+    return AtNRemove(Size().Decrement()); //TODO diverso, vedere da foto
   }
 
 }
