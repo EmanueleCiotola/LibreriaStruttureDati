@@ -13,14 +13,14 @@ public interface Collection<Data> extends ClearableContainer, InsertableContaine
   default boolean Filter(Predicate<Data> fun) {
     Natural oldsize = Size();
     if (fun != null) {
-      ForwardIterator<Data> itr = FIterator();
-      while (itr.IsValid()) {
-        Data dat = itr.GetCurrent();
-        if (fun.Apply(dat)) {
-          itr.Next();
+      ForwardIterator<Data> it = FIterator();
+      while (it.IsValid()) {
+        Data data = it.GetCurrent();
+        if (fun.Apply(data)) {
+          it.Next();
         } else {
-          Remove(dat);
-          itr.Reset();
+          Remove(data);
+          it.Reset();
         }
       }
     }
@@ -33,11 +33,11 @@ public interface Collection<Data> extends ClearableContainer, InsertableContaine
   
   @Override
   default void Clear() {
-    ForwardIterator<Data> itr = FIterator();
-    while (itr.IsValid()) {
-      Data data = itr.GetCurrent();
+    ForwardIterator<Data> it = FIterator();
+    while (it.IsValid()) {
+      Data data = it.GetCurrent();
       Remove(data);
-      itr.Reset();
+      it.Reset();
     }
   }
 

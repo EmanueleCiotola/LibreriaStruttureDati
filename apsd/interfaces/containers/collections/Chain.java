@@ -20,8 +20,8 @@ public interface Chain<Data> extends RemovableAtSequence<Data>, Set<Data> {
     if (data == null) return null;
     final long[] idx = new long[]{0L};
     final boolean[] found = new boolean[]{false};
-    TraverseForward(elem -> {
-      if (data.equals(elem)) { found[0] = true; return true; }
+    TraverseForward(current -> {
+      if (data.equals(current)) { found[0] = true; return true; }
       idx[0]++;
       return false;
     });

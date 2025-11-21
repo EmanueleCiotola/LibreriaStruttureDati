@@ -10,9 +10,9 @@ public interface Sequence<Data> extends IterableContainer<Data> {
 
   default Data GetAt(Natural index) {
     long idx = ExcIfOutOfBound(index);
-    ForwardIterator<Data> iterator = FIterator();
-    iterator.Next(idx);
-    return iterator.GetCurrent();
+    ForwardIterator<Data> it = FIterator();
+    it.Next(idx);
+    return it.GetCurrent();
   }
 
   default Data GetFirst() {
@@ -26,9 +26,9 @@ public interface Sequence<Data> extends IterableContainer<Data> {
 
   default Natural Search(Data data) {
     final Box<Long> idx = new Box<>(-1L);
-    if (TraverseForward(elm -> {
+    if (TraverseForward(current -> {
       idx.Set(idx.Get() + 1);
-      return (elm == null && data == null) || (elm.equals(data) &&elm != null && data != null);
+      return (current == null && data == null) || (current.equals(data) && current != null && data != null);
     })) return Natural.Of(idx.Get());
     return null;
   }

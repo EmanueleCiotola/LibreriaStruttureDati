@@ -37,6 +37,7 @@ public interface SortedSequence<Data extends Comparable<? super Data>> extends S
       if (cmp < 0) lower = mid + 1;
       else higher = mid - 1;
     }
+    
     return null;
   }
 

@@ -13,16 +13,16 @@ public interface TraversableContainer<Data> extends MembershipContainer<Data> {
 
   boolean TraverseBackward(Predicate<Data> predicate);
 
-  default <Acc> Acc FoldForward(Accumulator<Data, Acc> fun, Acc ini) {
-    final Box<Acc> acc = new Box<>(ini);
-    if (fun != null) TraverseForward(dat -> { acc.Set(fun.Apply(dat, acc.Get())); return false; });
-    return acc.Get();
+  default <Acc> Acc FoldForward(Accumulator<Data, Acc> fun, Acc initialValue) {
+    final Box<Acc> runningResult = new Box<>(initialValue);
+    if (fun != null) TraverseForward(current -> { runningResult.Set(fun.Apply(current, runningResult.Get())); return false; });
+    return runningResult.Get();
   }
 
-  default <Acc> Acc FoldBackward(Accumulator<Data, Acc> fun, Acc ini) {
-    final Box<Acc> acc = new Box<>(ini);
-    if (fun != null) TraverseBackward(dat -> { acc.Set(fun.Apply(dat, acc.Get())); return false; });
-    return acc.Get();
+  default <Acc> Acc FoldBackward(Accumulator<Data, Acc> fun, Acc initialValue) {
+    final Box<Acc> runningResult = new Box<>(initialValue);
+    if (fun != null) TraverseBackward(current -> { runningResult.Set(fun.Apply(current, runningResult.Get())); return false; });
+    return runningResult.Get();
   }
 
   /* ************************************************************************ */
@@ -31,11 +31,11 @@ public interface TraversableContainer<Data> extends MembershipContainer<Data> {
   
   @Override
   default Natural Size() {
-    final MutableNatural cnt = FoldForward((_, acc) -> {
-      acc.Increment();
-      return acc;
+    final MutableNatural sizeCounter = FoldForward((_, runningResult) -> {
+      runningResult.Increment();
+      return runningResult;
     }, new MutableNatural(0));
-    return cnt.ToNatural();
+    return sizeCounter.ToNatural();
   }
 
   /* ************************************************************************ */
@@ -44,7 +44,7 @@ public interface TraversableContainer<Data> extends MembershipContainer<Data> {
   
   @Override
   default boolean Exists(Data data) {
-    return TraverseForward(dat -> (dat == null && data == null) || (dat.equals(data) && dat != null && data != null));
+    return TraverseForward(current -> (current == null && data == null) || (current.equals(data) && current != null && data != null));
   }
 
 }
