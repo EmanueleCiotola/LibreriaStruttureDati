@@ -20,7 +20,7 @@ public interface ForwardIterator<Data> extends Iterator<Data> {
 
   default boolean ForEachForward(Predicate<Data> fun) {
     if (fun == null) throw new NullPointerException("Predicate cannot be null!");
-    while (IsValid()) if (fun.Apply(DataNNext())) return true;
+    while (IsValid()) { if (fun.Apply(DataNNext())) return true; }
     return false;
   }
 
