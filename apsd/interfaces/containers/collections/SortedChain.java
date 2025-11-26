@@ -3,7 +3,7 @@ package apsd.interfaces.containers.collections;
 import apsd.classes.utilities.Natural;
 import apsd.interfaces.containers.sequences.SortedSequence;
 
-public interface SortedChain<Data extends Comparable<? super Data>> extends OrderedChain<Data>, SortedSequence<Data> { // Must extend OrderedChain and SortedSequence
+public interface SortedChain<Data extends Comparable<? super Data>> extends OrderedChain<Data>, SortedSequence<Data> {
 
   /* ************************************************************************ */
   /* Search predecessor / successor (return index as Natural)                 */
@@ -14,20 +14,21 @@ public interface SortedChain<Data extends Comparable<? super Data>> extends Orde
 
     long left = 0;
     long right = Size().ToLong() - 1;
-    long pred = -1;
+    long predecessor = -1;
 
     while (left <= right) {
-      long mid = left + (right - left) / 2;
-      Data midElem = GetAt(Natural.Of(mid));
-      if (midElem.compareTo(data) < 0) {
-        pred = mid;
+      long mid = left + (right - left) / 2; //? utilizza la distanza per evitare overflow
+      Natural midNat = Natural.Of(mid);
+      Data midVal = GetAt(midNat);
+      if (midVal.compareTo(data) < 0) {
+        predecessor = mid;
         left = mid + 1;
       } else {
         right = mid - 1;
       }
     }
 
-    return pred >= 0 ? Natural.Of(pred) : null;
+    return predecessor >= 0 ? Natural.Of(predecessor) : null;
   }
 
   default Natural SearchSuccessor(Data data) {
@@ -35,20 +36,21 @@ public interface SortedChain<Data extends Comparable<? super Data>> extends Orde
 
     long left = 0;
     long right = Size().ToLong() - 1;
-    long succ = -1;
+    long successor = -1;
 
     while (left <= right) {
-      long mid = left + (right - left) / 2;
-      Data midElem = GetAt(Natural.Of(mid));
-      if (midElem.compareTo(data) > 0) {
-        succ = mid;
+      long mid = left + (right - left) / 2; //? utilizza la distanza per evitare overflow
+      Natural midNat = Natural.Of(mid);
+      Data midVal = GetAt(midNat);
+      if (midVal.compareTo(data) > 0) {
+        successor = mid;
         right = mid - 1;
       } else {
         left = mid + 1;
       }
     }
 
-    return succ >= 0 ? Natural.Of(succ) : null;
+    return successor >= 0 ? Natural.Of(successor) : null;
   }
 
   /* ************************************************************************ */
@@ -56,27 +58,7 @@ public interface SortedChain<Data extends Comparable<? super Data>> extends Orde
   /* ************************************************************************ */
 
   @Override
-  default Natural Search(Data data) {
-    if (data == null) return null;
-    long size = Size().ToLong();
-    if (size == 0) return null;
-
-    long left = 0;
-    long right = size;
-    while (left < right) {
-      long mid = left + (right - left) / 2;
-      Data midElem = GetAt(Natural.Of(mid));
-      int cmp = midElem.compareTo(data);
-      if (cmp < 0) left = mid + 1;
-      else right = mid;
-    }
-
-    if (left < size) {
-      Data val = GetAt(Natural.Of(left));
-      if (val.compareTo(data) == 0) return Natural.Of(left);
-    }
-    return null;
-  }
+  default Natural Search(Data data) { return SortedSequence.super.Search(data); }
 
   /* ************************************************************************ */
   /* Override specific member functions from Set                              */

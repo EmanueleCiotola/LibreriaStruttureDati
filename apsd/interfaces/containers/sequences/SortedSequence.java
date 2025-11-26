@@ -22,20 +22,22 @@ public interface SortedSequence<Data extends Comparable<? super Data>> extends S
   @Override
   default Natural Search(Data data) {
     if (data == null) return null;
-    final long size = Size().ToLong();
-    if (size == 0) return null;
+    long size = Size().ToLong();
 
-    long lower = 0;
-    long higher = size - 1;
+    long left = 0;
+    long right = size;
 
-    while (lower <= higher) {
-      long mid = (lower + higher) >>> 1; //? fa shift logico destro. Calcola quindi l’equivalente di (lower + higher) / 2 bitwise, ma evita possibile overflow
-      Natural midNat = Natural.Of(mid);
-      Data midVal = GetAt(midNat);
+    while (left < right) {
+      long mid = left + (right - left) / 2;
+      Data midVal = GetAt(Natural.Of(mid));
       int cmp = midVal.compareTo(data);
-      if (cmp == 0) return Natural.Of(mid);
-      if (cmp < 0) lower = mid + 1;
-      else higher = mid - 1;
+      if (cmp < 0) left = mid + 1;
+      else right = mid;
+    }
+
+    if (left < size) {
+      Data natVal = GetAt(Natural.Of(left));
+      if (natVal.compareTo(data) == 0) return Natural.Of(left);
     }
     
     return null;

@@ -16,16 +16,9 @@ public interface Chain<Data> extends RemovableAtSequence<Data>, Set<Data> {
   /* ************************************************************************ */
 
   @Override
-  default Natural Search(Data data) { //TODO penso faccia pena. Funziona ma tutti questi array temporanei...
+  default Natural Search(Data data) {
     if (data == null) return null;
-    final long[] idx = new long[]{0L};
-    final boolean[] found = new boolean[]{false};
-    TraverseForward(current -> {
-      if (data.equals(current)) { found[0] = true; return true; }
-      idx[0]++;
-      return false;
-    });
-    return found[0] ? Natural.Of(idx[0]) : null;
+    return RemovableAtSequence.super.Search(data);
   }
 
 }

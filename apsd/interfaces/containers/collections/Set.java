@@ -2,8 +2,6 @@ package apsd.interfaces.containers.collections;
 
 import apsd.interfaces.containers.base.IterableContainer;
 
-import java.util.ArrayList;
-
 public interface Set<Data> extends Collection<Data> {
 
   default void Union(Set<Data> other) {
@@ -22,15 +20,7 @@ public interface Set<Data> extends Collection<Data> {
     });
   }
 
-  default void Intersection(Set<Data> other) {
-    if (other == null) { Clear(); return; }
-    ArrayList<Data> toRemove = new ArrayList<>();
-    this.TraverseForward(elem -> {
-      if (!other.Exists(elem)) toRemove.add(elem);
-      return false;
-    });
-    for (Data data : toRemove) Remove(data);
-  }
+  default void Intersection(Set<Data> other) { Filter(elem -> other.Exists(elem)); }
 
   /* ************************************************************************ */
   /* Override specific member functions from IterableContainer                */

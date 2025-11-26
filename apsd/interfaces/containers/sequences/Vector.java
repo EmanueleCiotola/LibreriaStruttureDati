@@ -6,13 +6,13 @@ import apsd.interfaces.containers.base.ReallocableContainer;
 public interface Vector<Data> extends ReallocableContainer, MutableSequence<Data> {
 
   default void ShiftLeft(Natural position) { ShiftLeft(position, Natural.ONE); }
-  default void ShiftLeft(Natural pos, Natural num) {
-    long idx = ExcIfOutOfBound(pos);
+  default void ShiftLeft(Natural position, Natural num) {
+    long index = ExcIfOutOfBound(position);
     long size = Size().ToLong();
     long len = num.ToLong();
-    len = (len <= size - idx) ? len : size - idx;
+    len = (len <= size - index) ? len : size - index;
     if (len > 0) {
-      long iniwrt = idx;
+      long iniwrt = index;
       long wrt = iniwrt;
       for (long rdr = wrt + len; rdr < size; rdr++, wrt++) {
         Natural natrdr = Natural.Of(rdr);
@@ -33,15 +33,15 @@ public interface Vector<Data> extends ReallocableContainer, MutableSequence<Data
   }
 
   default void ShiftRight(Natural position) { ShiftRight(position, Natural.ONE); }
-  default void ShiftRight(Natural pos, Natural num) {
-    long idx = ExcIfOutOfBound(pos);
+  default void ShiftRight(Natural position, Natural num) {
+    long index = ExcIfOutOfBound(position);
     long size = Size().ToLong();
     long len = num.ToLong();
-    len = (len <= size - idx) ? len : size - idx;
+    len = (len <= size - index) ? len : size - index;
     if (len > 0) {
       long endwrt = size - 1;
       long wrt = endwrt;
-      for (long rdr = wrt - len; rdr >= idx; rdr--, wrt--) {
+      for (long rdr = wrt - len; rdr >= index; rdr--, wrt--) {
         Natural natrdr = Natural.Of(rdr);
         SetAt(GetAt(natrdr), Natural.Of(wrt));
         SetAt(null, natrdr);
@@ -62,8 +62,10 @@ public interface Vector<Data> extends ReallocableContainer, MutableSequence<Data
   default Vector<Data> SubVector(Natural start, Natural end) {
     long startIndex = ExcIfOutOfBound(start);
     long endIndex = ExcIfOutOfBound(end);
+    long size = Size().ToLong();
+    if (endIndex >= size) throw new IllegalArgumentException("End index cannot be greater than or equal to size.");
     if (startIndex > endIndex) throw new IllegalArgumentException("Start index cannot be greater than end index.");
-    return (Vector<Data>) SubSequence(start, end); //TODO cast pericoloso e quasi sicuramente sbagliato
+    return (Vector<Data>) SubSequence(start, end);
   }
 
   /* ************************************************************************ */

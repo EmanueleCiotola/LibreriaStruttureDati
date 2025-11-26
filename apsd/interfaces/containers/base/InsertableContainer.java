@@ -7,15 +7,15 @@ public interface InsertableContainer<Data> extends Container {
 
   boolean Insert(Data data);
 
-  default boolean InsertAll(TraversableContainer<Data> container) {
+  default boolean InsertAll(TraversableContainer<Data> items) {
     final Box<Boolean> all = new Box<>(true);
-    if (container != null) container.TraverseForward(data -> {all.Set(all.Get() && Insert(data)); return true;});
+    if (items != null) items.TraverseForward(dat -> { if (!Insert(dat)) all.Set(false); return false; });
     return all.Get();
   }
 
-  default boolean InsertSome(TraversableContainer<Data> container) {
+  default boolean InsertSome(TraversableContainer<Data> items) {
     final Box<Boolean> some = new Box<>(false);
-    if (container != null) container.TraverseForward(data -> {some.Set(some.Get() || Insert(data)); return true;});
+    if (items != null) items.TraverseForward(dat -> { if (Insert(dat)) { some.Set(true); return true; } return false; });
     return some.Get();
   }
 

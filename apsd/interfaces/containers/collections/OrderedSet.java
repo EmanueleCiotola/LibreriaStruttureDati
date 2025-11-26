@@ -14,7 +14,7 @@ public interface OrderedSet<Data extends Comparable<? super Data>> extends Set<D
     return min;
   }
 
-  default Data Max() { return FoldForward((dat, max) -> (max == null || dat.compareTo(max) > 0) ? dat : max, null); }
+  default Data Max() { return FoldForward((data, max) -> (max == null || data.compareTo(max) > 0) ? data : max, null); }
   default void RemoveMax() {
     Data max = Max();
     if (max != null) Remove(max);
@@ -32,14 +32,14 @@ public interface OrderedSet<Data extends Comparable<? super Data>> extends Set<D
     }, null);
   }
   default void RemovePredecessor(Data data) {
-    Data pre = Predecessor(data);
-    if (pre != null) Remove(pre);
+    Data predecessor = Predecessor(data);
+    if (predecessor != null) Remove(predecessor);
   }
   default Data PredecessorNRemove(Data data) {
-    Data pre = Predecessor(data);
-    if (pre == null) return null;
-    Remove(pre);
-    return pre;
+    Data predecessor = Predecessor(data);
+    if (predecessor == null) return null;
+    Remove(predecessor);
+    return predecessor;
   }
 
   default Data Successor(Data data) {
@@ -48,14 +48,14 @@ public interface OrderedSet<Data extends Comparable<? super Data>> extends Set<D
     }, null);
   }
   default void RemoveSuccessor(Data data) {
-    Data succ = Successor(data);
-    if (succ != null) Remove(succ);
+    Data successor = Successor(data);
+    if (successor != null) Remove(successor);
   }
   default Data SuccessorNRemove(Data data) {
-    Data succ = Successor(data);
-    if (succ == null) return null;
-    Remove(succ);
-    return succ;
+    Data successor = Successor(data);
+    if (successor == null) return null;
+    Remove(successor);
+    return successor;
   }
 
 }

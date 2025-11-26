@@ -6,7 +6,7 @@ import apsd.interfaces.traits.Predicate;
 /** Interface: Iteratore in avanti. */
 public interface ForwardIterator<Data> extends Iterator<Data> {
 
-  default void Next() { Next(1); }
+  default void Next() { DataNNext(); }
   default void Next(Natural steps) {
     if (steps == null) throw new NullPointerException("The number of steps cannot be null!");
     Next(steps.ToLong());

@@ -10,7 +10,7 @@ public interface List<Data> extends MutableSequence<Data>, InsertableAtSequence<
     long startIndex = ExcIfOutOfBound(start);
     long endIndex = ExcIfOutOfBound(end);
     if (startIndex > endIndex) throw new IllegalArgumentException("Start index cannot be greater than end index.");
-    return (List<Data>) SubSequence(start, end); //TODO verificare se va bene il cast potenzialmente pericoloso
+    return (List<Data>) SubSequence(start, end);
   }
 
   /* ************************************************************************ */

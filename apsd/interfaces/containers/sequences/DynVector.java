@@ -13,9 +13,10 @@ public interface DynVector<Data> extends ResizableContainer, InsertableAtSequenc
   @Override
   default void InsertAt(Data data, Natural position) {
     if (position == null) throw new NullPointerException("Natural number cannot be null!");
-    if (position.compareTo(Size()) > 0) throw new IndexOutOfBoundsException("Index out of bounds: " + position + "; Size: " + Size() + "!"); //? controlla se posizione > size affidando conversioni a compareTo di Natural. Non uso ExcIfOutOfBound(position) perché per InsertAt è lecito usare position == Size()
-    ShiftRight(position, Natural.ONE); //? ShiftRight espande automaticamente quando necessario
-    //TODO se cambio le shift come ha fatto il prof, devo espandere manualmente prima di fare Shift
+    if (position.compareTo(Size()) > 0) throw new IndexOutOfBoundsException("Index out of bounds: " + position + "; Size: " + Size() + "!"); //? non uso ExcIfOutOfBound(position) perché per InsertAt è lecito usare position == Size()
+    
+    if (position == Size()) Expand(Natural.ONE);
+    else ShiftRight(position, Natural.ONE);
     SetAt(data, position);
   }
 
@@ -37,46 +38,17 @@ public interface DynVector<Data> extends ResizableContainer, InsertableAtSequenc
 
   @Override
   default void ShiftLeft(Natural pos, Natural num) {
-    long idx = ExcIfOutOfBound(pos);
-    long size = Size().ToLong();
-    long len = num.ToLong();
-    len = (len <= size - idx) ? len : size - idx;
-    if (len > 0) {
-      long wrt = idx;
-      for (long rdr = wrt + len; rdr < size; rdr++, wrt++) {
-        SetAt(GetAt(Natural.Of(rdr)), Natural.Of(wrt));
-        SetAt(null, Natural.Of(rdr));
-      }
-      Reduce(Natural.Of(len));
-    }
+      Vector.super.ShiftLeft(pos, num);
+      Reduce(num);
   }
 
   @Override
   default void ShiftRight(Natural pos, Natural num) {
-    if (pos == null || num == null) throw new NullPointerException("Natural number cannot be null!");
-    long p = pos.ToLong();
-    long add = num.ToLong();
-    long size = Size().ToLong();
-    if (p > size) throw new IndexOutOfBoundsException("Index out of bounds: " + p + "; Size: " + Size() + "!"); //? non uso ExcIfOutOfBound(pos) perché per ShiftRight è lecito usare pos == Size()
-    if (add <= 0) return;
-    Expand(Natural.Of(add));
-    for (long rdr = size - 1, wrt = size + add - 1; rdr >= p; rdr--, wrt--) {
-      SetAt(GetAt(Natural.Of(rdr)), Natural.Of(wrt));
-      SetAt(null, Natural.Of(rdr));
-    }
-    for (long i = 0; i < add; i++) SetAt(null, Natural.Of(p + i));
+    Expand(num);
+    Vector.super.ShiftRight(pos, num);
   }
 
-  /* ************************************************************************ */
-  /* Subvector returning DynVector                                             */
-  /* ************************************************************************ */
-
-  default DynVector<Data> SubVector(Natural start, Natural end) {
-    long startIndex = ExcIfOutOfBound(start);
-    long endIndex = ExcIfOutOfBound(end);
-    if (startIndex > endIndex) throw new IllegalArgumentException("Start index cannot be greater than end index.");
-    return (DynVector<Data>) SubSequence(start, end); //TODO cast pericoloso e quasi sicuramente sbagliato
-  }
+  default DynVector<Data> SubVector(Natural start, Natural end) { return (DynVector<Data>) Vector.super.SubVector(start, end); }
 
   /* ************************************************************************ */
   /* Override specific member functions from Container                        */
