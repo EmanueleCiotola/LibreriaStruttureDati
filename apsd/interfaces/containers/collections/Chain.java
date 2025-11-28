@@ -9,7 +9,7 @@ public interface Chain<Data> extends RemovableAtSequence<Data>, Set<Data> {
 
   default void RemoveOccurrences(Data data) { Filter(elem -> !elem.equals(data)); }
 
-  default Chain<Data> SubChain(Natural from, Natural to) { return (Chain<Data>) SubSequence(from, to); }
+  default Chain<Data> SubChain(Natural start, Natural end) { return (Chain<Data>) SubSequence(start, end); }
 
   /* ************************************************************************ */
   /* Override specific member functions from Sequence                         */

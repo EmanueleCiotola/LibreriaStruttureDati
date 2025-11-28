@@ -1,20 +1,18 @@
 package apsd.classes.containers.sequences;
 
-// import apsd.classes.containers.sequences.abstractbases.DynCircularVectorBase;
-// import apsd.classes.utilities.Natural;
-// import apsd.interfaces.containers.base.TraversableContainer;
+import apsd.classes.containers.sequences.abstractbases.DynCircularVectorBase;
+import apsd.classes.utilities.Natural;
+import apsd.interfaces.containers.base.TraversableContainer;
 
 /** Object: Concrete dynamic circular vector implementation. */
-public class DynCircularVector<Data> { // Must extend DynCircularVectorBase
+public class DynCircularVector<Data> extends DynCircularVectorBase<Data> {
 
-  // public DynCircularVector()
+  public DynCircularVector() { super(); }
+  public DynCircularVector(Natural initialSize) { super(initialSize); }
+  public DynCircularVector(Data[] arr) { super(arr); }
+  public DynCircularVector(TraversableContainer<Data> container) { super(container); }
 
-  // public DynCircularVector(Natural inisize)
-
-  // public DynCircularVector(TraversableContainer<Data> con)
-
-  // protected DynCircularVector(Data[] arr)
-
-  // NewVector
+  @Override
+  public DynCircularVector<Data> NewVector(Data[] arr) { return new DynCircularVector<>(arr); }
 
 }

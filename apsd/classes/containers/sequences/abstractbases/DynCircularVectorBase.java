@@ -1,44 +1,102 @@
 package apsd.classes.containers.sequences.abstractbases;
 
-// import apsd.classes.utilities.Natural;
-// import apsd.interfaces.containers.base.TraversableContainer;
-// import apsd.interfaces.containers.sequences.DynVector;
+import apsd.classes.utilities.Natural;
+import apsd.interfaces.containers.base.TraversableContainer;
+import apsd.interfaces.containers.sequences.DynVector;
 
 /** Object: Abstract dynamic circular vector base implementation. */
-abstract public class DynCircularVectorBase<Data> { // Must extend CircularVectorBase and implement DynVector
+abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Data> implements DynVector<Data> {
 
-  // protected long size = 0L;
+  protected long size = 0L;
 
-  // DynCircularVectorBase
+  public DynCircularVectorBase(){ super(); }
+  public DynCircularVectorBase(Natural initialSize){
+    super();
+    this.size = initialSize.ToLong();
+  }
+  public DynCircularVectorBase(Data[] arr) {
+    super(arr);
+    this.size = arr.length;
+  }
+  public DynCircularVectorBase(TraversableContainer<Data> con){
+    super(con);
+    this.size = con.Size().ToLong();
+  }
+
+  @Override
+  public void ArrayAlloc(Natural newSize) {
+    if (newSize == null) throw new NullPointerException("Size cannot be null!");
+    super.ArrayAlloc(newSize);
+    start = 0L;
+  }
 
   /* ************************************************************************ */
   /* Override specific member functions from Container                        */
   /* ************************************************************************ */
 
-  // ...
+  @Override
+  public Natural Size() { return Natural.Of(size); }
 
   /* ************************************************************************ */
   /* Override specific member functions from ClearableContainer               */
   /* ************************************************************************ */
 
-  // ...
+  @Override
+  public void Clear() {
+    super.Clear();
+    this.size = 0L;
+  }
 
   /* ************************************************************************ */
   /* Override specific member functions from ReallocableContainer             */
   /* ************************************************************************ */
 
-  // ...
+  @Override
+  public void Realloc(Natural newCapacity) {
+    super.Realloc(newCapacity);
+    if (size > newCapacity.ToLong()) {
+      size = newCapacity.ToLong();
+    }
+  }
 
   /* ************************************************************************ */
   /* Override specific member functions from ResizableContainer               */
   /* ************************************************************************ */
 
-  // ...
+  @Override
+  public void Expand(Natural newSize){
+    if (newSize == null) throw new NullPointerException("Size cannot be null.");
+    long req = newSize.ToLong();
+    if (req < size)  throw new IllegalArgumentException("Expand cannot reduce size.");
+
+    if (req > arr.length) Realloc(newSize);
+    size = req;
+  }
+
+  @Override
+  public void Reduce(Natural newSize){
+    if (newSize == null) throw new NullPointerException("Size cannot be null.");
+    long LNewSize = newSize.ToLong();
+    if (LNewSize > size)  throw new IllegalArgumentException("Reduce cannot increase size.");
+    if (LNewSize > arr.length) throw new IllegalArgumentException("Size cannot be greater than capacity.");
+
+    size = LNewSize;
+  }
 
   /* ************************************************************************ */
   /* Specific member functions of Vector                                      */
   /* ************************************************************************ */
+  
+  @Override
+  public void ShiftLeft(Natural position, Natural num) {
+    super.ShiftLeft(position, num);
+    Reduce(num);
+  }
 
-  // ...
+  @Override
+  public void ShiftRight(Natural position, Natural num) {
+    Expand(num);
+    super.ShiftRight(position, num);
+  }
 
 }
