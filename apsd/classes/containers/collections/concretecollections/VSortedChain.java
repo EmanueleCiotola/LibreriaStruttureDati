@@ -1,4 +1,4 @@
-package apsd.classes.containers.collections.concretecollections;
+// package apsd.classes.containers.collections.concretecollections;
 
 // import apsd.classes.containers.collections.concretecollections.bases.VChainBase;
 // import apsd.classes.utilities.Natural;
@@ -6,29 +6,42 @@ package apsd.classes.containers.collections.concretecollections;
 // import apsd.interfaces.containers.collections.SortedChain;
 // import apsd.interfaces.containers.sequences.DynVector;
 
-/** Object: Concrete set implementation via (dynamic circular) vector. */
-public class VSortedChain<Data> { // Must extend VChainBase and implements SortedChain
+// /** Object: Concrete set implementation via (dynamic circular) vector. */
+// public class VSortedChain<Data extends Comparable<? super Data>> extends VChainBase<Data> implements SortedChain<Data> {
 
-  // public VSortedChain()
+//   public VSortedChain() { super(); }
+//   public VSortedChain(TraversableContainer<Data> con) { super(con); }
+//   public VSortedChain(VSortedChain<Data> chn) { super(chn.vec); }
+//   protected VSortedChain(DynVector<Data> vec) { super(vec); }
 
-  // public VSortedChain(VSortedChain<Data> chn)
+//   @Override
+//   protected VChainBase<Data> NewChain(DynVector<Data> vec) { return new VSortedChain<>(vec); }
 
-  // public VSortedChain(TraversableContainer<Data> con)
+//   /* ************************************************************************ */
+//   /* Override specific member functions from InsertableContainer              */
+//   /* ************************************************************************ */
 
-  // protected VSortedChain(DynVector<Data> vec)
+//   @Override
+//   public boolean Insert(Data data) {
+//     if (data == null) return false;
+//     //TODO Da fare
+//     return true;
+//   }
 
-  // NewChain
+//   /* ************************************************************************ */
+//   /* Override specific member functions from Chain                            */
+//   /* ************************************************************************ */
 
-  /* ************************************************************************ */
-  /* Override specific member functions from InsertableContainer              */
-  /* ************************************************************************ */
+//   @Override
+//   public boolean InsertIfAbsent(Data data) {
+//     if (data == null) return false;
+//     //TODO Da fare
+//     return true;
+//   }
+//   @Override
+//   public void RemoveOccurrences(Data data) {
+//     if (data == null) return;
+//     //TODO Da fare
+//   }
 
-  // ...
-
-  /* ************************************************************************ */
-  /* Override specific member functions from Chain                            */
-  /* ************************************************************************ */
-
-  // ...
-
-}
+// }
