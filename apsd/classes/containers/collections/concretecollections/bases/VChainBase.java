@@ -43,9 +43,9 @@ abstract public class VChainBase<Data> implements Chain<Data> {
   @Override
     public boolean Remove (Data data) {
     if (data == null) return false;
-    Natural posision = vec.Search(data);
-    if (posision == null) return false;
-    vec.ShiftLeft(posision);
+    Natural position = vec.Search(data);
+    if (position == null) return false;
+    vec.ShiftLeft(position);
     return true;
   }
 
@@ -64,7 +64,10 @@ abstract public class VChainBase<Data> implements Chain<Data> {
   /* ************************************************************************ */
 
   @Override
-  public abstract Data GetAt(Natural index);
+  public Data GetAt(Natural index) {
+    if (index == null) throw new NullPointerException("Natural number cannot be null!");
+    return vec.GetAt(index);
+  }
 
   @Override
   public Sequence<Data> SubSequence(Natural startIndex, Natural endIndex) { return vec.SubVector(startIndex, endIndex); }
@@ -97,9 +100,9 @@ abstract public class VChainBase<Data> implements Chain<Data> {
       MutableForwardIterator <Data> rdr = vec.FIterator();
       for(; rdr.IsValid(); rdr.Next()){
         if(rdr.GetCurrent() != null){
-          Data dat = rdr.GetCurrent();
+          Data data = rdr.GetCurrent();
           rdr.SetCurrent(null);
-          wrt.SetCurrent(dat);
+          wrt.SetCurrent(data);
           wrt.Next();
         }
       }
