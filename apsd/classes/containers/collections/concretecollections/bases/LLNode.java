@@ -11,14 +11,11 @@ public class LLNode<Data> implements MutableReference<Data> {
   protected Box<LLNode<Data>> next = new Box<>();
 
   public LLNode() {}
-
   public LLNode(Data dat) { this.dat = dat; }
-
   public LLNode(Data dat, LLNode<Data> nextnode) {
     this(dat);
     next.Set(nextnode);
   }
-
   public LLNode(LLNode<Data> node) {
     if (node == null) { throw new NullPointerException("LLNode cannot be null!"); }
     dat = node.dat;

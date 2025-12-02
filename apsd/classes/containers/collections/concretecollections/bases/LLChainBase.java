@@ -22,10 +22,10 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
 
   public LLChainBase() {}
 
-  public LLChainBase(TraversableContainer<Data> con) { //TODO se il dato è null non va bene, modificare, questa deve essere una collezione, ma gli passo un cointainer
-    size.Assign(con.Size());
+  public LLChainBase(TraversableContainer<Data> container) { //TODO se il dato è null non va bene, modificare, questa deve essere una collezione, ma gli passo un cointainer
+    size.Assign(container.Size());
     final Box<Boolean> first = new Box<>(true);
-    con.TraverseForward(data -> {
+    container.TraverseForward(data -> {
       LLNode<Data> node = new LLNode<>(data);
       if (first.Get()) {
         headref.Set(node);
