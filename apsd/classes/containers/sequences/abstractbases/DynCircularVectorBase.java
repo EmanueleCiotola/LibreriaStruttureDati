@@ -11,7 +11,7 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
 
   public DynCircularVectorBase(){ super(); }
   public DynCircularVectorBase(Natural initialSize){
-    super();
+    super(); //TODO qui forse va passato initialSize
     this.size = initialSize.ToLong();
   }
   public DynCircularVectorBase(Data[] arr) {
@@ -64,12 +64,13 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
   /* ************************************************************************ */
 
   @Override
-  public void Expand(Natural newSize) {
-    if (newSize == null) throw new NullPointerException("Size cannot be null!");
-    long req = newSize.ToLong();
-    if (req < size)  throw new IllegalArgumentException("Expand cannot reduce size!");
+  public void Expand(Natural num) { //TODO Expand e Reduce
+    if (num == null) throw new NullPointerException("Size cannot be null!");
+    long LNum = num.ToLong();
+    if (LNum < 0) throw new IllegalArgumentException("Expand amount cannot be negative!");
 
-    if (req > arr.length) Realloc(newSize);
+    long req = size + LNum;
+    if (req > arr.length) Realloc(Natural.Of(req));
     size = req;
   }
 

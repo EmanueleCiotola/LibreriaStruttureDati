@@ -319,7 +319,7 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
 
   @Override
   public void RemoveFirst() { //TODO controllare
-    if (headref.IsNull()) throw new IndexOutOfBoundsException("First element does not exist!");
+    if (headref.IsNull()) return;
     headref.Set(headref.Get().GetNext().Get());
     size.Decrement();
     if (headref.IsNull()) tailref.Set(null);
@@ -327,7 +327,7 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
 
   @Override
   public void RemoveLast() { //TODO controllare
-    if (tailref.IsNull()) throw new IndexOutOfBoundsException("Last element does not exist!");
+    if (tailref.IsNull()) return;
     if (size.ToLong() == 1) {
       headref.Set(null);
       tailref.Set(null);
@@ -348,12 +348,14 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
   }
 
   public Data FirstNRemove() {
+    if (Size().IsZero()) return null;
     Data data = GetFirst();
     RemoveFirst();
     return data;
   }
 
   public Data LastNRemove() {
+    if (Size().IsZero()) return null;
     Data data = GetLast();
     RemoveLast();
     return data;

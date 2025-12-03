@@ -94,7 +94,7 @@ abstract public class VectorBase<Data> implements Vector<Data> {
 
   protected class VectorBIterator implements MutableBackwardIterator<Data> {
     
-    protected long index = arr.length - 1;
+    protected long index = Size().ToLong() - 1; //TODO prima era arr.length - 1 ma dava errore in test
 
     @Override
     public boolean IsValid() { return index >= 0; }
@@ -124,7 +124,7 @@ abstract public class VectorBase<Data> implements Vector<Data> {
     }
     
     @Override
-    public void Reset() { index = arr.length - 1; }
+    public void Reset() { index = Size().ToLong() - 1; } //TODO prima era arr.length - 1 ma dava errore in test
 
   }
 

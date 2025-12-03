@@ -63,7 +63,7 @@ abstract public class CircularVectorBase<Data> extends VectorBase<Data> {
   public void ShiftLeft(Natural position, Natural num) {
     long index = ExcIfOutOfBound(position);
     long size = Size().ToLong();
-    long len= num.ToLong();
+    long len = num.ToLong();
     len = (len <= size - index) ? len : size - index;
     if (index < size - (index + len)) {
       long iniwrt = index - 1 + len;
@@ -86,7 +86,7 @@ abstract public class CircularVectorBase<Data> extends VectorBase<Data> {
   public void ShiftRight(Natural position, Natural num) {
     long index = ExcIfOutOfBound(position);
     long size = Size().ToLong();
-    long len= num.ToLong();
+    long len = num.ToLong();
     len = (len <= size - index) ? len : size - index;
     if (index < size - (index + len)) {
       long iniwrt = index;
