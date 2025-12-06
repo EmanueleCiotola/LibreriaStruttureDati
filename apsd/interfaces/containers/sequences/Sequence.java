@@ -28,7 +28,7 @@ public interface Sequence<Data> extends IterableContainer<Data> {
     final Box<Long> idx = new Box<>(-1L);
     if (TraverseForward(current -> {
       idx.Set(idx.Get() + 1);
-      return (current == null && data == null) || (current.equals(data) && current != null && data != null);
+      return (current == null && data == null) || (current != null && data != null && current.equals(data));
     })) return Natural.Of(idx.Get());
     return null;
   }

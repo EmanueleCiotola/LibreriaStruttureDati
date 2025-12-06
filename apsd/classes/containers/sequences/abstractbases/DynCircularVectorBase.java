@@ -18,9 +18,9 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
     super(arr);
     this.size = arr.length;
   }
-  public DynCircularVectorBase(TraversableContainer<Data> con){
-    super(con);
-    this.size = con.Size().ToLong();
+  public DynCircularVectorBase(TraversableContainer<Data> container){
+    super(container);
+    this.size = container.Size().ToLong();
   }
 
   @Override

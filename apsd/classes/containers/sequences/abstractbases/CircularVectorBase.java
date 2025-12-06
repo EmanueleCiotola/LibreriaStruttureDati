@@ -63,46 +63,43 @@ abstract public class CircularVectorBase<Data> extends VectorBase<Data> {
   public void ShiftLeft(Natural position, Natural num) {
     long index = ExcIfOutOfBound(position);
     long size = Size().ToLong();
-    long len = num.ToLong();
-    len = (len <= size - index) ? len : size - index;
-    if (index < size - (index + len)) {
-      long iniwrt = index - 1 + len;
-      long wrt = iniwrt;
-      for (long rdr = wrt - len; rdr >= 0; rdr-- , wrt-- ) {
-        Natural natrdr = Natural.Of(rdr);
-        SetAt(GetAt(natrdr), Natural.Of(wrt));
-        SetAt(null, natrdr);
+    long len = Math.min(num.ToLong(), size - index);
+
+    if (len <= 0) return;
+    
+    if (index < len) {
+      for (long rdr = index - 1; rdr >= 0; rdr--) {
+        Natural natRdr = Natural.Of(rdr);
+        Natural natWrt = Natural.Of(rdr + len);
+        SetAt(GetAt(natRdr), natWrt);
+        SetAt(null, natRdr);
       }
-      for (; iniwrt - wrt < len; wrt-- ) {
-        SetAt(null, Natural.Of(wrt));
-      }
-      start = (start + len) % arr.length;
-    } else {
-      super.ShiftLeft(position, num);
-    }
+
+      start = (start + len) % arr.length; //? aggiusta start mantenendolo nel range consentito
+    } else super.ShiftLeft(position, num);
   }
 
   @Override
   public void ShiftRight(Natural position, Natural num) {
     long index = ExcIfOutOfBound(position);
     long size = Size().ToLong();
-    long len = num.ToLong();
-    len = (len <= size - index) ? len : size - index;
-    if (index < size - (index + len)) {
-      long iniwrt = index;
-      long wrt = iniwrt;
-      for (long rdr = wrt + len; rdr < size; rdr++ , wrt++ ) {
-        Natural natrdr = Natural.Of(rdr);
-        SetAt(GetAt(natrdr), Natural.Of(wrt));
-        SetAt(null, natrdr);
+    long len = Math.min(num.ToLong(), size - index);
+
+    if (len <= 0) return;
+
+    if (index < len) {
+      for (long rdr = index - 1; rdr >= 0; rdr--) {
+        Natural natRdr = Natural.Of(rdr);
+        Natural natWrt = Natural.Of(rdr + size - len);
+        SetAt(GetAt(natRdr), natWrt);
       }
-      for (; wrt - iniwrt < len; wrt++ ) {
-        SetAt(null, Natural.Of(wrt));
+
+      start = (start - len + arr.length) % arr.length; //? aggiusta start mantenendolo nel range consentito
+
+      for (long offset = 0; offset < len; offset++) {
+        SetAt(null, Natural.Of(index + offset));
       }
-      start = (start - len + arr.length) % arr.length;
-    } else {
-      super.ShiftRight(position, num);
-    }
+    } else super.ShiftRight(position, num);
   }
-  
+
 }

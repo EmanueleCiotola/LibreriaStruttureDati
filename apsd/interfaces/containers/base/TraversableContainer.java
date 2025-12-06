@@ -44,7 +44,7 @@ public interface TraversableContainer<Data> extends MembershipContainer<Data> {
   
   @Override
   default boolean Exists(Data data) {
-    return TraverseForward(current -> (current == null && data == null) || (current.equals(data) && current != null && data != null));
+    return TraverseForward(current -> (current == null && data == null) || (current != null && data != null && current.equals(data)));
   }
 
 }

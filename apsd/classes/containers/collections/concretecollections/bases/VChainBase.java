@@ -18,7 +18,7 @@ abstract public class VChainBase<Data> implements Chain<Data> {
 
   protected VChainBase() { vec = new DynCircularVector<>(); }
   protected VChainBase(DynVector<Data> vec) { this.vec = vec; }
-  public VChainBase(TraversableContainer<Data> con) { vec = new DynCircularVector<>(con); }
+  public VChainBase(TraversableContainer<Data> container) { vec = new DynCircularVector<>(container); }
   
   protected abstract VChainBase<Data> NewChain(DynVector<Data> vec);
 

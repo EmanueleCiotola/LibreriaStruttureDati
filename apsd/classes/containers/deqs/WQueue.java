@@ -13,10 +13,10 @@ public class WQueue<Data> implements Queue<Data> {
 
   public WQueue() { this.lst = new VList<>(); }
   public WQueue(List<Data> lst) { this.lst = lst; }
-  public WQueue(TraversableContainer<Data> con) { this.lst = new VList<>(con); }
-  public WQueue(List<Data> lst, TraversableContainer<Data> con){
+  public WQueue(TraversableContainer<Data> container) { this.lst = new VList<>(container); }
+  public WQueue(List<Data> lst, TraversableContainer<Data> container){
     this.lst = lst;
-    con.TraverseForward(dat -> {this.lst.Insert(dat); return false;});
+    container.TraverseForward(data -> {this.lst.Insert(data); return false;}); //TODO forse InsertLast?
   }
 
   /* ************************************************************************ */
@@ -50,6 +50,6 @@ public class WQueue<Data> implements Queue<Data> {
   public Data HeadNDequeue() { return lst.FirstNRemove(); }
 
   @Override
-  public void Enqueue(Data data) { lst.Insert(data); }
+  public void Enqueue(Data data) { lst.InsertLast(data); }
 
 }

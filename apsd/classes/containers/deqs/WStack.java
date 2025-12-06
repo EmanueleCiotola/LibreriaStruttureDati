@@ -13,10 +13,10 @@ public class WStack<Data> implements Stack<Data> {
 
   public WStack() { this.lst = new VList<>(); }
   public WStack(List<Data> lst) { this.lst = lst; }
-  public WStack(TraversableContainer<Data> con) { this.lst = new VList<>(con); }
-  public WStack(List<Data> lst, TraversableContainer<Data> con) {
+  public WStack(TraversableContainer<Data> container) { this.lst = new VList<>(container); }
+  public WStack(List<Data> lst, TraversableContainer<Data> container) {
     this.lst = lst;
-    con.TraverseForward(dat -> {this.lst.Insert(dat); return false;});
+    container.TraverseForward(data -> { this.lst.InsertLast(data); return false; });
   }
 
   /* ************************************************************************ */
@@ -65,6 +65,6 @@ public class WStack<Data> implements Stack<Data> {
   }
 
   @Override
-  public void Push(Data data) { lst.Insert(data); }
+  public void Push(Data data) { lst.InsertLast(data); }
 
 }
