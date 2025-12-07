@@ -416,25 +416,34 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
   @Override
   public void RemoveOccurrences(Data data) {
     if (data == null || headref.IsNull()) return;
-    LLNode<Data> pred = PredFind(data);
-    Box<LLNode<Data>> curr = (pred == null) ? headref : pred.GetNext();
 
-    while (!curr.IsNull()) {
-      LLNode<Data> node = curr.Get(); // nodo candidato
-      if (node == null) break;
-      if (node.Get().compareTo(data) != 0) break;
+    ForwardIterator<Box<LLNode<Data>>> itr = FRefIterator();
+    LLNode<Data> prev = null;
 
-      Box<LLNode<Data>> nextBox = node.GetNext();
-      LLNode<Data> after = nextBox.IsNull() ? null : nextBox.Get();
+    while (itr.IsValid()) {
+        Box<LLNode<Data>> bItr = itr.GetCurrent();
+        LLNode<Data> node = bItr.Get();
+        int cmp = node.Get().compareTo(data);
+        
+        if (cmp > 0) break;
+        if (cmp < 0) {
+            prev = node;
+            itr.Next();
+        } 
+        else {
+            LLNode<Data> next = node.GetNext().IsNull() ? null : node.GetNext().Get();
+            bItr.Set(next);
 
-      curr.Set(after);
-      size.Decrement();
+            if (prev == null) headref.Set(next);
+            else prev.SetNext(next);
+
+            if (next == null) tailref.Set(prev);
+            else if (tailref.Get() == node) tailref.Set(next);
+
+            size.Decrement();
+            //? non avanziamo l'iteratore perché punta già al nodo successivo
+        }
     }
-
-    if (pred == null) headref.Set(curr.IsNull() ? null : curr.Get());
-    else pred.SetNext(curr.IsNull() ? null : curr.Get());
-
-    if (curr.IsNull()) tailref.Set(pred);
   }
 
 }
