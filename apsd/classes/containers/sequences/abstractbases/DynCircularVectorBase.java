@@ -11,7 +11,7 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
 
   public DynCircularVectorBase(){ super(); }
   public DynCircularVectorBase(Natural initialSize){
-    super(); //TODO qui forse va passato initialSize
+    super(initialSize);
     this.size = initialSize.ToLong();
   }
   public DynCircularVectorBase(Data[] arr) {
@@ -25,9 +25,8 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
 
   @Override
   public void ArrayAlloc(Natural newSize) {
-    if (newSize == null) throw new NullPointerException("Size cannot be null!");
     super.ArrayAlloc(newSize);
-    start = 0L;
+    this.size = 0L;
   }
 
   /* ************************************************************************ */
@@ -53,10 +52,10 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
 
   @Override
   public void Realloc(Natural newCapacity) {
+    long oldSize = size;
     super.Realloc(newCapacity);
-    if (size > newCapacity.ToLong()) {
-      size = newCapacity.ToLong();
-    }
+    size = oldSize;
+    if (size > newCapacity.ToLong()) size = newCapacity.ToLong();
   }
 
   /* ************************************************************************ */
@@ -64,22 +63,23 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
   /* ************************************************************************ */
 
   @Override
-  public void Expand(Natural num) { //TODO Expand e Reduce
+  public void Expand(Natural num) {
     if (num == null) throw new NullPointerException("Size cannot be null!");
     long LNum = num.ToLong();
     if (LNum < 0) throw new IllegalArgumentException("Expand amount cannot be negative!");
 
-    long req = size + LNum;
-    if (req > arr.length) Realloc(Natural.Of(req));
-    size = req;
+    Grow(num);
+    size += LNum;
   }
 
   @Override
   public void Reduce(Natural num) {
     if (num == null) throw new NullPointerException("Size cannot be null!");
     long LNum = num.ToLong();
-    if (LNum > size) throw new IllegalArgumentException("Reduce cannot be bigger than size!");
+    if (LNum > size)  throw new IllegalArgumentException("Reduce cannot be bigger than size!");
+
     size -= LNum;
+    Shrink();
   }
 
   /* ************************************************************************ */

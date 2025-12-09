@@ -26,10 +26,11 @@ abstract public class VectorBase<Data> implements Vector<Data> {
     container.TraverseForward(data -> {SetAt(data, index.GetNIncrement()); return false; });
   }
 
-  protected abstract VectorBase<Data> NewVector(Data[] arr); //TODO il diagramma la vuole void ma non avrebbe senso
+  protected abstract VectorBase<Data> NewVector(Data[] arr);
 
   @SuppressWarnings("unchecked")
   protected void ArrayAlloc(Natural newSize) {
+    if (newSize == null) throw new NullPointerException("Size cannot be null!");
     long size = newSize.ToLong();
     if (size >= Integer.MAX_VALUE) throw new ArithmeticException("Overflow: size cannot exceed Integer.MAX_VALUE!");
     arr = (Data[]) new Object[(int) size];
@@ -61,7 +62,7 @@ abstract public class VectorBase<Data> implements Vector<Data> {
     public boolean IsValid() { return index < Size().ToLong(); }
 
     @Override
-    public void Next() { //TODO verificare che sia utile overridare la next e se in caso devo overridare anche le altre
+    public void Next() {
       if (!IsValid()) throw new IndexOutOfBoundsException("Iterator not valid!");
       index++;
     }
@@ -80,8 +81,9 @@ abstract public class VectorBase<Data> implements Vector<Data> {
 
     @Override
     public Data DataNNext() {
-      if (!IsValid()) throw new IndexOutOfBoundsException("Iterator not valid!");
-      return GetAt(Natural.Of(index++)); //? L'incremento dell'indice avviene dopo la GetAt
+      Data curr = GetCurrent();
+      Next();
+      return curr;
     }
 
     @Override
@@ -94,13 +96,13 @@ abstract public class VectorBase<Data> implements Vector<Data> {
 
   protected class VectorBIterator implements MutableBackwardIterator<Data> {
     
-    protected long index = Size().ToLong() - 1; //TODO prima era arr.length - 1 ma dava errore in test
+    protected long index = Size().ToLong() - 1;
 
     @Override
     public boolean IsValid() { return index >= 0; }
 
     @Override
-    public void Prev() { //TODO verificare che sia utile overridare la prev e se in caso devo overridare anche le altre
+    public void Prev() {
       if(!IsValid()) throw new IndexOutOfBoundsException("Iterator not valid!");
       index--;
     }
@@ -119,12 +121,13 @@ abstract public class VectorBase<Data> implements Vector<Data> {
 
     @Override
     public Data DataNPrev() {
-      if(!IsValid()) throw new IndexOutOfBoundsException("Iterator not valid!");
-      return GetAt(Natural.Of(index--));
+      Data curr = GetCurrent();
+      Prev();
+      return curr;
     }
     
     @Override
-    public void Reset() { index = Size().ToLong() - 1; } //TODO prima era arr.length - 1 ma dava errore in test
+    public void Reset() { index = Size().ToLong() - 1; }
 
   }
 
@@ -146,7 +149,7 @@ abstract public class VectorBase<Data> implements Vector<Data> {
   /* Override specific member functions from Sequence                         */
   /* ************************************************************************ */
 
-  @Override //TODO controllare che funzioni correttamente
+  @Override //TODO rivedere perchè fa schifo (fatta da chatgpt)
   @SuppressWarnings("unchecked")
   public MutableSequence<Data> SubSequence(Natural start, Natural end) {
     if (start == null || end == null) throw new NullPointerException("Indices cannot be null!");

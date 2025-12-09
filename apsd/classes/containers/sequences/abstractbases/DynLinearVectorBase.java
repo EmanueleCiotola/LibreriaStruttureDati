@@ -24,9 +24,9 @@ abstract public class DynLinearVectorBase<Data> extends LinearVectorBase<Data> i
   }
 
   @Override
-  protected void ArrayAlloc(Natural newSize) { //TODO che senso ha questo override?
-    if (newSize == null) throw new NullPointerException("Size cannot be null!");
+  protected void ArrayAlloc(Natural newSize) {
     super.ArrayAlloc(newSize);
+    this.size = 0L;
   }
 
   /* ************************************************************************ */
@@ -52,11 +52,10 @@ abstract public class DynLinearVectorBase<Data> extends LinearVectorBase<Data> i
 
   @Override
   public void Realloc(Natural newCapacity) {
-    if (newCapacity == null) { throw new NullPointerException("Natural cannot be null!"); }
+    long oldSize = size;
     super.Realloc(newCapacity);
-    if(size > newCapacity.ToLong()){
-        size = newCapacity.ToLong();
-    }
+    size = oldSize;
+    if (size > newCapacity.ToLong()) size = newCapacity.ToLong();
   }
 
   /* ************************************************************************ */
@@ -64,14 +63,13 @@ abstract public class DynLinearVectorBase<Data> extends LinearVectorBase<Data> i
   /* ************************************************************************ */
 
   @Override
-  public void Expand(Natural num) { //TODO Expand e Reduce
+  public void Expand(Natural num) {
     if (num == null) throw new NullPointerException("Size cannot be null!");
     long LNum = num.ToLong();
     if (LNum < 0) throw new IllegalArgumentException("Expand amount cannot be negative!");
 
-    long req = size + LNum;
-    if (req > arr.length) Realloc(Natural.Of(req));
-    size = req;
+    Grow(num);
+    size += LNum;
   }
 
   @Override
@@ -79,7 +77,9 @@ abstract public class DynLinearVectorBase<Data> extends LinearVectorBase<Data> i
     if (num == null) throw new NullPointerException("Size cannot be null!");
     long LNum = num.ToLong();
     if (LNum > size)  throw new IllegalArgumentException("Reduce cannot be bigger than size!");
+
     size -= LNum;
+    Shrink();
   }
 
 }

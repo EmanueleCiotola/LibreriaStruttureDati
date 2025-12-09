@@ -8,11 +8,11 @@ import apsd.interfaces.containers.base.TraversableContainer;
 public class Vector<Data> extends LinearVectorBase<Data> {
 
   public Vector() { super(); }
-  public Vector(Natural initialSize) { super.ArrayAlloc(initialSize); }
+  public Vector(Natural initialSize) { super(initialSize); }
   public Vector(Data[] arr) { super(arr); }
   public Vector(TraversableContainer<Data> container){ super(container); }
 
   @Override
-  public Vector<Data> NewVector (Data[] arr) { return new Vector<>(arr); }
+  protected Vector<Data> NewVector (Data[] arr) { return new Vector<>(arr); }
   
 }
