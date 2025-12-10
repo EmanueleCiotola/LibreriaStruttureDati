@@ -13,6 +13,6 @@ public class CircularVector<Data> extends CircularVectorBase<Data> {
   public CircularVector(TraversableContainer<Data> container) { super(container); }
 
   @Override
-  public CircularVector<Data> NewVector(Data[] arr) { return new CircularVector<>(arr); }
+  protected CircularVector<Data> NewVector(Data[] arr) { return new CircularVector<>(arr); }
 
 }

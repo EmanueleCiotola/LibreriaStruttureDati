@@ -9,16 +9,16 @@ abstract public class DynLinearVectorBase<Data> extends LinearVectorBase<Data> i
 
   protected long size = 0L;
 
-  public DynLinearVectorBase() { super(); }
-  public DynLinearVectorBase(Natural initialSize) {
+  protected DynLinearVectorBase() { super(); }
+  protected DynLinearVectorBase(Natural initialSize) {
     super(initialSize);
     this.size = initialSize.ToLong();
   }
-  public DynLinearVectorBase(Data[] arr) {
+  protected DynLinearVectorBase(Data[] arr) {
     super(arr);
     this.size = arr.length;
   }
-  public DynLinearVectorBase(TraversableContainer<Data> container) {
+  protected DynLinearVectorBase(TraversableContainer<Data> container) {
     super(container);
     this.size = container.Size().ToLong();
   }

@@ -14,7 +14,7 @@ abstract public class CircularVectorBase<Data> extends VectorBase<Data> {
   protected CircularVectorBase(TraversableContainer<Data> container) { super(container); }
 
   @Override
-  public void ArrayAlloc(Natural newSize) {
+  protected void ArrayAlloc(Natural newSize) {
     super.ArrayAlloc(newSize);
     this.start = 0L;
   }

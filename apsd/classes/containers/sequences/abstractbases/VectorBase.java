@@ -54,9 +54,9 @@ abstract public class VectorBase<Data> implements Vector<Data> {
   /* Override specific member functions from IterableContainer                */
   /* ************************************************************************ */
 
-  protected class VectorFIterator implements MutableForwardIterator<Data> {
+  private class VectorFIterator implements MutableForwardIterator<Data> {
     
-    protected long index = 0;
+    private long index = 0;
 
     @Override
     public boolean IsValid() { return index < Size().ToLong(); }
@@ -94,9 +94,9 @@ abstract public class VectorBase<Data> implements Vector<Data> {
   @Override
   public MutableForwardIterator<Data> FIterator() { return new VectorFIterator(); }
 
-  protected class VectorBIterator implements MutableBackwardIterator<Data> {
+  private class VectorBIterator implements MutableBackwardIterator<Data> {
     
-    protected long index = Size().ToLong() - 1;
+    private long index = Size().ToLong() - 1;
 
     @Override
     public boolean IsValid() { return index >= 0; }

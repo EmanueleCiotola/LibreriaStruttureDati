@@ -24,7 +24,7 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
   }
 
   @Override
-  public void ArrayAlloc(Natural newSize) {
+  protected void ArrayAlloc(Natural newSize) {
     super.ArrayAlloc(newSize);
     this.size = 0L;
   }

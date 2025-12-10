@@ -13,6 +13,6 @@ public class DynVector<Data> extends DynLinearVectorBase<Data> {
   public DynVector(TraversableContainer<Data> container) { super(container); }
 
   @Override
-  public DynVector<Data> NewVector(Data[] arr) { return new DynVector<>(arr); }
+  protected DynVector<Data> NewVector(Data[] arr) { return new DynVector<>(arr); }
 
 }

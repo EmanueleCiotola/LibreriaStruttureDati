@@ -13,6 +13,6 @@ public class DynCircularVector<Data> extends DynCircularVectorBase<Data> {
   public DynCircularVector(TraversableContainer<Data> container) { super(container); }
 
   @Override
-  public DynCircularVector<Data> NewVector(Data[] arr) { return new DynCircularVector<>(arr); }
+  protected DynCircularVector<Data> NewVector(Data[] arr) { return new DynCircularVector<>(arr); }
 
 }
