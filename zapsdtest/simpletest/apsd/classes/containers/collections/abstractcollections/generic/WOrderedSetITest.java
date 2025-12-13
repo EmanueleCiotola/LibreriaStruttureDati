@@ -79,6 +79,15 @@ abstract public class WOrderedSetITest extends WOrderedSetTest<Long> {
       TestFoldBackward((dat, acc) -> acc + dat, 0L, 2L);
       TestClear();
       TestSize(0, false);
+      
+      TestClear();
+      TestInsert(4L, true);
+      TestInsert(5L, true);
+      TestInsert(6L, true);
+      TestInsert(7L, true);
+      TestInsert(8L, true);
+      TestSuccessorNRemove(3L, 4L);
+      TestPredecessorNRemove(6L, 5L);
     }
 
   }
