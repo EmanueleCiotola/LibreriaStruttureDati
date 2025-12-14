@@ -82,16 +82,15 @@ abstract public class CircularVectorBase<Data> extends VectorBase<Data> {
     long len = Math.min(num.ToLong(), size - index);
 
     if (len <= 0) return;
-    
+
     if (index < len) {
-      for (long rdr = index - 1; rdr >= 0; rdr--) {
-        Natural natRdr = Natural.Of(rdr);
-        Natural natWrt = Natural.Of(rdr + len);
-        SetAt(GetAt(natRdr), natWrt);
-        SetAt(null, natRdr);
+      for (long i = 0; i < len; i++) {
+        Natural currentPos = Natural.Of(i);
+        if (i < index) SetAt(GetAt(currentPos), Natural.Of(i + len));
+        SetAt(null, currentPos);
       }
 
-      start = (start + len) % arr.length; //? aggiusta start mantenendolo nel range consentito
+      start = (start + len) % arr.length;
     } else super.ShiftLeft(position, num);
   }
 
@@ -104,16 +103,10 @@ abstract public class CircularVectorBase<Data> extends VectorBase<Data> {
     if (len <= 0) return;
 
     if (index < len) {
-      for (long rdr = index - 1; rdr >= 0; rdr--) {
-        Natural natRdr = Natural.Of(rdr);
-        Natural natWrt = Natural.Of(rdr + size - len);
-        SetAt(GetAt(natRdr), natWrt);
-      }
-
-      start = (start - len + arr.length) % arr.length; //? aggiusta start mantenendolo nel range consentito
-      for (long offset = 0; offset < len; offset++) {
-        SetAt(null, Natural.Of(index + offset));
-      }
+      start = (start - len + arr.length) % arr.length;
+      
+      for (long i = 0; i < index; i++) { SetAt(GetAt(Natural.Of(i + len)), Natural.Of(i)); }
+      for (long offset = 0; offset < len; offset++) { SetAt(null, Natural.Of(index + offset)); }
     } else super.ShiftRight(position, num);
   }
 
