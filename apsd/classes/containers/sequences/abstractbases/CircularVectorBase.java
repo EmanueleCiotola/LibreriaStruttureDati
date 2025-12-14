@@ -111,7 +111,6 @@ abstract public class CircularVectorBase<Data> extends VectorBase<Data> {
       }
 
       start = (start - len + arr.length) % arr.length; //? aggiusta start mantenendolo nel range consentito
-
       for (long offset = 0; offset < len; offset++) {
         SetAt(null, Natural.Of(index + offset));
       }
