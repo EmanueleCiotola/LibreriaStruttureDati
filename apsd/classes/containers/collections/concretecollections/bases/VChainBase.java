@@ -83,32 +83,29 @@ abstract public class VChainBase<Data> implements Chain<Data> {
   /* Override specific member functions from Collection                       */
   /* ************************************************************************ */
 
-  public boolean Filter(Predicate<Data> fun) {
-    if (fun == null) return false;
+  @Override
+  public boolean Filter(Predicate<Data> pred) {
+    if (pred == null) throw new IllegalArgumentException("Predicate cannot be null");
+    MutableForwardIterator<Data> readItr = vec.FIterator();
+    MutableForwardIterator<Data> writeItr = vec.FIterator();
+    boolean changed = false;
+    long keptCount = 0;
 
-    long removedCount = 0; //? conta gli elementi segnati per la rimozione
-    MutableForwardIterator <Data> wrt = vec.FIterator();
-    
-    for (; wrt.IsValid();wrt.Next()){
-      if(!fun.Apply(wrt.GetCurrent())){
-        removedCount++;
-        wrt.SetCurrent(null);
-      }
+    while (readItr.IsValid()) {
+      Data elem = readItr.GetCurrent();
+      if (pred.Apply(elem)) {
+        if (changed) writeItr.SetCurrent(elem);
+        writeItr.Next();
+        keptCount++;
+      } else changed = true;
+      readItr.Next();
     }
-    if (removedCount > 0) {
-      wrt.Reset();
-      MutableForwardIterator <Data> rdr = vec.FIterator();
-      for(; rdr.IsValid(); rdr.Next()){
-        if(rdr.GetCurrent() != null){
-          Data data = rdr.GetCurrent();
-          rdr.SetCurrent(null);
-          wrt.SetCurrent(data);
-          wrt.Next();
-        }
-      }
-      vec.Reduce(Natural.Of(removedCount));
+    if (changed) {
+      long itemsToRemove = vec.Size().ToLong() - keptCount;
+      vec.Reduce(Natural.Of(itemsToRemove));
     }
-    return removedCount > 0;
+
+    return changed;
   }
 
 }

@@ -37,21 +37,21 @@ public class LLList<Data> extends LLChainBase<Data> implements List<Data> {
   /* ************************************************************************ */
   @Override
   public void SetAt(Data data, Natural index) {
-    if (data == null) throw new NullPointerException("Data cannot be null!");
-    if (index == null) throw new NullPointerException("Index cannot be null!");
+    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
+    if (index == null) throw new IllegalArgumentException("Index cannot be null!");
     List.super.SetAt(data, index);
   }
 
   @Override
   public void SetFirst(Data data) {
-    if (data == null) throw new NullPointerException("Data cannot be null!");
+    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
     if (headref.IsNull()) throw new IndexOutOfBoundsException("First element does not exist!");
     headref.Get().Set(data);
   }
 
   @Override
   public void SetLast(Data data) {
-    if (data == null) throw new NullPointerException("Data cannot be null!");
+    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
     if (tailref.IsNull()) throw new IndexOutOfBoundsException("Last element does not exist!");
     tailref.Get().Set(data);
   }
@@ -62,14 +62,14 @@ public class LLList<Data> extends LLChainBase<Data> implements List<Data> {
 
   @Override
   public MutableSequence<Data> SubSequence(Natural from, Natural to) {
-    if (from == null || to == null) throw new NullPointerException("Indices cannot be null!");
+    if (from == null || to == null) throw new IllegalArgumentException("Indices cannot be null!");
     return (MutableSequence<Data>) super.SubSequence(from, to);
   }
 
   @Override
   public void InsertAt(Data data, Natural position) {
-    if (data == null) throw new NullPointerException("Data cannot be null!");
-    if (position == null) throw new NullPointerException("Position cannot be null!");
+    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
+    if (position == null) throw new IllegalArgumentException("Position cannot be null!");
     long LPosition = position.ToLong();
     long LSize = size.ToLong();
     if (LPosition > LSize) throw new IndexOutOfBoundsException("Index out of bounds: " + LPosition + "; Size: " + LSize + "!");
@@ -86,7 +86,7 @@ public class LLList<Data> extends LLChainBase<Data> implements List<Data> {
 
   @Override
   public void InsertFirst(Data data) {
-    if (data == null) throw new NullPointerException("Data cannot be null!");
+    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
     LLNode<Data> node = new LLNode<>(data);
     if (headref.IsNull()) {
       headref.Set(node);
@@ -100,7 +100,7 @@ public class LLList<Data> extends LLChainBase<Data> implements List<Data> {
 
   @Override
   public void InsertLast(Data data) {
-    if (data == null) throw new NullPointerException("Data cannot be null!");
+    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
     LLNode<Data> node = new LLNode<>(data);
     if (tailref.IsNull()) {
       headref.Set(node);

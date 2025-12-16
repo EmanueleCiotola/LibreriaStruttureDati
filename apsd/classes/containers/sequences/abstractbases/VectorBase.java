@@ -149,23 +149,22 @@ abstract public class VectorBase<Data> implements Vector<Data> {
   /* Override specific member functions from Sequence                         */
   /* ************************************************************************ */
 
-  @Override //TODO rivedere perchè fa schifo (fatta da chatgpt)
+  @Override
   @SuppressWarnings("unchecked")
   public MutableSequence<Data> SubSequence(Natural start, Natural end) {
     if (start == null || end == null) throw new NullPointerException("Indices cannot be null!");
-    
-    long LStart = start.ToLong();
-    long LEnd = end.ToLong();
-    long size = Size().ToLong();
 
-    if (LStart > LEnd) throw new IllegalArgumentException("Start index cannot be greater than end index!");
-    if (LEnd >= size) throw new IndexOutOfBoundsException("End index out of bounds!");
+    long lStart = start.ToLong();
+    long lEnd = end.ToLong();
+    long currentSize = Size().ToLong();
 
-    int newSize = (int)(LEnd - LStart + 1);
-    Data[] newArr = (Data[]) new Object[newSize];
-    for (int i = 0; i < newSize; i++) {
-        newArr[i] = GetAt(Natural.Of(LStart + i));
-    }
+    if (lStart > lEnd) throw new IllegalArgumentException("Start index cannot be greater than end index!");
+    if (lStart < 0 || lEnd >= currentSize) throw new IndexOutOfBoundsException("Indices out of bounds! Start: " + lStart + ", End: " + lEnd + ", Size: " + currentSize);
+
+    int startIndex = (int) lStart;
+    int newLen = (int) (lEnd - lStart + 1);
+    Data[] newArr = (Data[]) new Object[newLen];
+    System.arraycopy(this.arr, startIndex, newArr, 0, newLen);
 
     return (MutableSequence<Data>) NewVector(newArr);
   }
