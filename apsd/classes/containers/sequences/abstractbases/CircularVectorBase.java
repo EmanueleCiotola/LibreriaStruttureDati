@@ -23,7 +23,7 @@ abstract public class CircularVectorBase<Data> extends VectorBase<Data> {
   /* Override specific member functions from ReallocableContainer             */
   /* ************************************************************************ */
 
-  @Override //TODO forse è meglio usare la versione in basso
+  @Override
   public void Realloc(Natural newCapacity) {
     if (newCapacity == null) throw new NullPointerException("Natural cannot be null!");
     Data[] oldArr = arr;
@@ -34,22 +34,6 @@ abstract public class CircularVectorBase<Data> extends VectorBase<Data> {
       arr[(int) index]=oldArr[(int) ((oldStart+index) % oldArr.length)];
     }
   }
-  // @Override
-  // public void Realloc(Natural newCapacity) {
-  //   if (newCapacity == null) throw new NullPointerException("Natural cannot be null!");
-  //   Data[] oldArr = arr;
-  //   long oldStart = start;
-  //   int oldLen = oldArr.length;
-  //   int minSize = (int) Math.min(Size().ToLong(), newCapacity.ToLong());
-    
-  //   ArrayAlloc(newCapacity);
-  //   if (minSize == 0) return;
-
-  //   int firstChunk = Math.min(minSize, oldLen - (int) oldStart);
-  //   System.arraycopy(oldArr, (int) oldStart, arr, 0, firstChunk);
-  //   int remaining = minSize - firstChunk;
-  //   if (remaining > 0) System.arraycopy(oldArr, 0, arr, firstChunk, remaining);
-  // }
 
   /* ************************************************************************ */
   /* Override specific member functions from Sequence                         */

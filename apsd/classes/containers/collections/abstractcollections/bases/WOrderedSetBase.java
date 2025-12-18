@@ -44,15 +44,15 @@ abstract public class WOrderedSetBase<Data extends Comparable<? super Data>, Cha
 
   @Override
   public Data Predecessor(Data data) { return chain.Predecessor(data); }
+ 
+  @Override
+  public Data Successor(Data data) { return chain.Successor(data); }
 
   @Override
   public void RemovePredecessor(Data data) { chain.RemovePredecessor(data); }
 
   @Override
   public void RemoveSuccessor(Data data) { chain.RemoveSuccessor(data); }
-
-  @Override
-  public Data Successor(Data data) { return chain.Successor(data); }
 
   @Override
   public Data PredecessorNRemove(Data data) { return chain.PredecessorNRemove(data); }

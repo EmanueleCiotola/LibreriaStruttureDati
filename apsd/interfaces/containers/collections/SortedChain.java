@@ -9,7 +9,7 @@ public interface SortedChain<Data extends Comparable<? super Data>> extends Orde
   /* Search predecessor / successor (return index as Natural)                 */
   /* ************************************************************************ */
 
-  default Natural SearchPredecessor(Data data) { //TODO potrebbe casare errori insieme a searchsuccessor
+  default Natural SearchPredecessor(Data data) {
     if (data == null || Size().IsZero()) return null;
 
     long left = 0;
@@ -18,19 +18,11 @@ public interface SortedChain<Data extends Comparable<? super Data>> extends Orde
 
     while (left <= right) {
       long mid = left + (right - left) / 2; //? utilizza la distanza per evitare overflow
-      Natural midNat = Natural.Of(mid);
-      Data midVal = GetAt(midNat);
-      //TODO questo risolve un errore
-      // if (midVal == null) { // skip holes that may appear after shifts
-      //   right = mid - 1;
-      //   continue;
-      // }
+      Data midVal = GetAt(Natural.Of(mid));
       if (midVal.compareTo(data) < 0) {
         predecessor = mid;
         left = mid + 1;
-      } else {
-        right = mid - 1;
-      }
+      } else right = mid - 1;
     }
 
     return predecessor >= 0 ? Natural.Of(predecessor) : null;
@@ -45,19 +37,11 @@ public interface SortedChain<Data extends Comparable<? super Data>> extends Orde
 
     while (left <= right) {
       long mid = left + (right - left) / 2; //? utilizza la distanza per evitare overflow
-      Natural midNat = Natural.Of(mid);
-      Data midVal = GetAt(midNat);
-      //TODO questo risolve un errore
-      // if (midVal == null) { // skip holes that may appear after shifts
-      //   right = mid - 1;
-      //   continue;
-      // }
+      Data midVal = GetAt(Natural.Of(mid));
       if (midVal.compareTo(data) > 0) {
         successor = mid;
         right = mid - 1;
-      } else {
-        left = mid + 1;
-      }
+      } else left = mid + 1;
     }
 
     return successor >= 0 ? Natural.Of(successor) : null;

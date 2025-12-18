@@ -156,60 +156,25 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
   /* ************************************************************************ */
 
   @Override
-    public Natural Search(Data dat){
-        if(dat == null) return null;
-        long low = 0;
-        long high = Size().ToLong() - 1;
-        while(low <= high){
-            long mid = low + (high - low) / 2;
-            Data elem = GetAt(Natural.Of(mid));
-            int cmp = elem.compareTo(dat);
+  public Natural Search(Data dat) { //TODO verifica
+    if(dat == null) return null;
+    long low = 0;
+    long high = Size().ToLong() - 1;
+    while(low <= high){
+      long mid = low + (high - low) / 2;
+      Data elem = GetAt(Natural.Of(mid));
+      int cmp = elem.compareTo(dat);
 
-            if(cmp == 0){
-                return Natural.Of(mid);
-            } else if(cmp < 0){
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
-        }
-        return null;
+      if(cmp == 0){
+        return Natural.Of(mid);
+      } else if(cmp < 0){
+        low = mid + 1;
+      } else {
+        high = mid - 1;
+      }
     }
-
-  //TODO mi manda i test in loop sta puttana
-  // @Override
-  // public Natural Search(Data data) {
-  //   if (data == null) return null;
-  //   Box<LLNode<Data>> curr = headref;
-  //   long len = size.ToLong();
-  //   long index = 0L;
-
-  //   while (len > 0 && !curr.IsNull()) {
-  //     long step = len / 2;
-  //     Box<LLNode<Data>> next = curr;
-  //     for (long i = 0; i < step; i++) {
-  //       if (next.IsNull()) break;
-  //       LLNode<Data> node = next.Get();
-  //       if (node == null) { next = new Box<>(); break; }
-  //       next = node.GetNext();
-  //     }
-
-  //     if (next.IsNull()) break;
-  //     LLNode<Data> node = next.Get();
-  //     if (node == null) break;
-  //     Data elem = node.Get();
-
-  //     int cmp = elem.compareTo(data);
-  //     if (cmp == 0) return Natural.Of(index + step);
-  //     else if (cmp < 0) {
-  //       curr = next;
-  //       index += step;
-  //       len = len - step;
-  //     } else len = step;
-  //   }
-
-  //   return null;
-  // }
+    return null;
+  }
 
   /* ************************************************************************ */
   /* Override specific member functions from SortedSequence                   */
