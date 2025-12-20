@@ -64,10 +64,7 @@ abstract public class VChainBase<Data> implements Chain<Data> {
   /* ************************************************************************ */
 
   @Override
-  public Data GetAt(Natural index) {
-    if (index == null) throw new NullPointerException("Natural number cannot be null!");
-    return vec.GetAt(index);
-  }
+  public Data GetAt(Natural index) { return vec.GetAt(index); }
 
   @Override
   public Sequence<Data> SubSequence(Natural startIndex, Natural endIndex) { return vec.SubVector(startIndex, endIndex); }

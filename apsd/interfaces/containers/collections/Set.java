@@ -6,6 +6,7 @@ public interface Set<Data> extends Collection<Data> {
 
   default void Union(Set<Data> other) {
     if (other == null) return;
+    if (other == this) return;
     other.TraverseForward(elem -> {
       if (!this.Exists(elem)) Insert(elem);
       return false;
@@ -14,7 +15,10 @@ public interface Set<Data> extends Collection<Data> {
 
   default void Difference(Set<Data> other) {
     if (other == null) return;
-    if (other == this) this.Clear();
+    if (other == this) {
+      this.Clear();
+      return;
+    }
     
     other.TraverseForward(elem -> {
       this.Remove(elem);
@@ -22,7 +26,11 @@ public interface Set<Data> extends Collection<Data> {
     });
   }
 
-  default void Intersection(Set<Data> other) { Filter(elem -> other.Exists(elem)); }
+  default void Intersection(Set<Data> other) {
+    if (other == null) return;
+    if (other == this) return;
+    Filter(elem -> other.Exists(elem));
+  }
 
   /* ************************************************************************ */
   /* Override specific member functions from IterableContainer                */

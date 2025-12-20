@@ -198,9 +198,9 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
     public Data GetCurrent() { return itr.GetCurrent().Get().Get(); }
 
     @Override
-    public void SetCurrent(Data dat) {
-      if (dat == null) return;
-      itr.GetCurrent().Get().Set(dat);
+    public void SetCurrent(Data data) {
+      if (data == null) return;
+      itr.GetCurrent().Get().Set(data);
     }
 
     @Override
@@ -232,9 +232,9 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
     public Data GetCurrent() { return itr.GetCurrent().Get().Get(); }
 
     @Override
-    public void SetCurrent(Data dat) {
-      if (dat == null) return;
-      itr.GetCurrent().Get().Set(dat);
+    public void SetCurrent(Data data) {
+      if (data == null) return;
+      itr.GetCurrent().Get().Set(data);
     }
 
     @Override
@@ -274,12 +274,12 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
     final Box<LLNode<Data>> headlst = new Box<>();
     final Box<LLNode<Data>> taillst = new Box<>();
 
-    TraverseForward(dat -> {
+    TraverseForward(data -> {
       long i = idx.Get();
       if (i > lTo) return true;
       
       if (i >= lFrom) {
-        LLNode<Data> node = new LLNode<>(dat);
+        LLNode<Data> node = new LLNode<>(data);
         if (headlst.IsNull()) headlst.Set(node);
         else taillst.Get().SetNext(node);
         taillst.Set(node);
@@ -380,7 +380,8 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
         prev.Set(node);
         itr.Next();
       } else {
-        curBox.Set(node.GetNext() == null ? null : node.GetNext().Get());
+        Box<LLNode<Data>> nextBox = node.GetNext();
+        curBox.Set(nextBox.IsNull() ? null : nextBox.Get());
         if (tailref.Get() == node) {
           tailref.Set(prev.Get());
         }

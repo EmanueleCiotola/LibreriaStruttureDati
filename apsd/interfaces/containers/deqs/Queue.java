@@ -23,11 +23,7 @@ public interface Queue<Data> extends ClearableContainer, InsertableContainer<Dat
   /* ************************************************************************ */
 
   @Override
-  default void Clear() {
-    while (!IsEmpty()) {
-      Dequeue();
-    }
-  }
+  default void Clear() { while (!IsEmpty()) { Dequeue(); } }
 
   /* ************************************************************************ */
   /* Override specific member functions from InsertableContainer              */

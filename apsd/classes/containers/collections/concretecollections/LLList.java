@@ -38,7 +38,6 @@ public class LLList<Data> extends LLChainBase<Data> implements List<Data> {
   @Override
   public void SetAt(Data data, Natural index) {
     if (data == null) throw new IllegalArgumentException("Data cannot be null!");
-    if (index == null) throw new IllegalArgumentException("Index cannot be null!");
     List.super.SetAt(data, index);
   }
 
@@ -62,13 +61,11 @@ public class LLList<Data> extends LLChainBase<Data> implements List<Data> {
 
   @Override
   public MutableSequence<Data> SubSequence(Natural from, Natural to) {
-    if (from == null || to == null) throw new IllegalArgumentException("Indices cannot be null!");
     return (MutableSequence<Data>) super.SubSequence(from, to);
   }
 
   @Override
   public void InsertAt(Data data, Natural position) {
-    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
     if (position == null) throw new IllegalArgumentException("Position cannot be null!");
     long LPosition = position.ToLong();
     long LSize = size.ToLong();

@@ -20,7 +20,7 @@ public interface Sequence<Data> extends IterableContainer<Data> {
   }
 
   default Data GetLast() {
-    if (Size().IsZero()) throw new IndexOutOfBoundsException("GetLast on empty sequence");
+    if (Size().IsZero()) throw new IndexOutOfBoundsException("GetLast on empty sequence!");
     return GetAt(Size().Decrement());
   }
 

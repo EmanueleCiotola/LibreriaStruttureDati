@@ -62,8 +62,6 @@ public interface Vector<Data> extends ReallocableContainer, MutableSequence<Data
   default Vector<Data> SubVector(Natural start, Natural end) {
     long startIndex = ExcIfOutOfBound(start);
     long endIndex = ExcIfOutOfBound(end);
-    long size = Size().ToLong();
-    if (endIndex >= size) throw new IllegalArgumentException("End index cannot be greater than or equal to size.");
     if (startIndex > endIndex) throw new IllegalArgumentException("Start index cannot be greater than end index.");
     return (Vector<Data>) SubSequence(start, end);
   }

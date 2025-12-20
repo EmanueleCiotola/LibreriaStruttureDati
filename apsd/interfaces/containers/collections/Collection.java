@@ -32,13 +32,7 @@ public interface Collection<Data> extends ClearableContainer, InsertableContaine
   /* ************************************************************************ */
   
   @Override
-  default void Clear() {
-    ForwardIterator<Data> it = FIterator();
-    while (it.IsValid()) {
-      Data data = it.GetCurrent();
-      Remove(data);
-      it.Reset();
-    }
+  default void Clear() { Filter(elem -> false);
   }
 
 }

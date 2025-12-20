@@ -11,9 +11,7 @@ public interface SortedSequence<Data extends Comparable<? super Data>> extends S
   /* ************************************************************************ */
 
   @Override
-  default boolean Exists(Data data) {
-    return Search(data) != null;
-  }
+  default boolean Exists(Data data) { return Search(data) != null; }
 
   /* ************************************************************************ */
   /* Override specific member functions from Sequence                         */

@@ -12,10 +12,11 @@ public interface DynVector<Data> extends ResizableContainer, InsertableAtSequenc
 
   @Override
   default void InsertAt(Data data, Natural position) {
+    Natural size = Size();
     if (position == null) throw new NullPointerException("Natural number cannot be null!");
-    if (position.compareTo(Size()) > 0) throw new IndexOutOfBoundsException("Index out of bounds: " + position + "; Size: " + Size() + "!"); //? non uso ExcIfOutOfBound(position) perché per InsertAt è lecito usare position == Size()
+    if (position.compareTo(size) > 0) throw new IndexOutOfBoundsException("Index out of bounds: " + position + "; Size: " + size + "!"); //? non uso ExcIfOutOfBound(position) perché per InsertAt è lecito usare position == Size()
     
-    if (position == Size()) Expand(Natural.ONE);
+    if (position.compareTo(size) == 0) Expand(Natural.ONE);
     else ShiftRight(position, Natural.ONE);
     SetAt(data, position);
   }
@@ -26,7 +27,6 @@ public interface DynVector<Data> extends ResizableContainer, InsertableAtSequenc
 
   @Override
   default Data AtNRemove(Natural position) {
-    ExcIfOutOfBound(position);
     Data old = GetAt(position);
     ShiftLeft(position, Natural.ONE);
     return old;

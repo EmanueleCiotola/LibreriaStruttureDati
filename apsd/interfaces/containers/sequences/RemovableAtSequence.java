@@ -9,10 +9,7 @@ public interface RemovableAtSequence<Data> extends Sequence<Data> {
   /* Default removal methods                                                    */
   /* ************************************************************************ */
 
-  default void RemoveAt(Natural position) {
-    long index = ExcIfOutOfBound(position);
-    AtNRemove(Natural.Of(index));
-  }
+  default void RemoveAt(Natural position) { AtNRemove(position); }
 
   Data AtNRemove(Natural position);
 

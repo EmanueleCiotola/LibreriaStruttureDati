@@ -16,7 +16,7 @@ public interface Chain<Data> extends RemovableAtSequence<Data>, Set<Data> {
   /* ************************************************************************ */
 
   @Override
-  default Natural Search(Data data) {
+  default Natural Search(Data data) { //TODO verificare utilità (il prof ha fatto così)
     if (data == null) return null;
     return RemovableAtSequence.super.Search(data);
   }

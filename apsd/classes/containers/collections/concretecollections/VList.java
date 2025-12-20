@@ -35,25 +35,16 @@ public class VList<Data> extends VChainBase<Data> implements List<Data> {
   /* ************************************************************************ */
 
   @Override
-  public void SetAt(Data data, Natural position) { 
-    if (position == null) throw new NullPointerException("Position cannot be null!");
-    vec.SetAt(data, position); 
-  }
+  public void SetAt(Data data, Natural position) { vec.SetAt(data, position); }
 
   @Override
-  public MutableSequence<Data> SubSequence(Natural from, Natural to) { 
-    if (from == null || to == null) throw new NullPointerException("Indices cannot be null!");
-    return (MutableSequence<Data>) vec.SubVector(from, to); 
-  }
+  public MutableSequence<Data> SubSequence(Natural from, Natural to) { return (MutableSequence<Data>) vec.SubVector(from, to); }
 
   /* ************************************************************************ */
   /* Override specific member functions from InsertableAtSequence             */
   /* ************************************************************************ */
 
   @Override
-  public void InsertAt(Data data, Natural position) { 
-    if (position == null) throw new NullPointerException("Position cannot be null!");
-    vec.InsertAt(data, position); 
-  }
+  public void InsertAt(Data data, Natural position) { vec.InsertAt(data, position); }
 
 }

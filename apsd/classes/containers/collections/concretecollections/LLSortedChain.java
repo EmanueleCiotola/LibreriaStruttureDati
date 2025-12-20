@@ -24,7 +24,7 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
   /* ************************************************************************ */
   
   protected LLNode<Data> PredFind(Data data) {
-    if (data == null || headref.Get() == null) return null;
+    if (data == null || headref.IsNull()) return null;
 
     long LSize = size.ToLong();
     long left = 0;
@@ -52,7 +52,7 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
 }
 
   public LLNode<Data> PredPredFind(Data data) {
-    if (data == null || headref.Get() == null) return null;
+    if (data == null || headref.IsNull()) return null;
 
     long LSize = size.ToLong();
     LLNode<Data> pred = null;
@@ -80,7 +80,7 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
   }
 
   protected LLNode<Data> SuccFind(Data data) {
-    if (data == null || headref.Get() == null) return null;
+    if (data == null || headref.IsNull()) return null;
 
     long left = 0;
     long right = size.ToLong() - 1;
@@ -104,7 +104,7 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
         left = mid + 1;
       }
     }
-    if (!base.IsNull() && base.Get() != null && base.Get().Get().compareTo(data) > 0) succ = base.Get();
+    if (!base.IsNull() && base.Get().Get().compareTo(data) > 0) succ = base.Get();
 
     return succ;
   }
@@ -120,6 +120,7 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
     Box<LLNode<Data>> curr = (pred == null) ? headref : pred.GetNext();
     LLNode<Data> next = curr.IsNull() ? null : curr.Get();
     LLNode<Data> newNode = new LLNode<>(data, next);
+    
     curr.Set(newNode);
     if (tailref.Get() == pred) tailref.Set(newNode);
     size.Increment();
@@ -139,7 +140,6 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
     if (curr.IsNull()) return false;
 
     LLNode<Data> node = curr.Get();
-    if (node == null) return false;
     if (node.Get().compareTo(data) != 0) return false;
 
     Box<LLNode<Data>> nextBox = node.GetNext();
@@ -156,23 +156,27 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
   /* ************************************************************************ */
 
   @Override
-  public Natural Search(Data dat) { //TODO verifica
-    if(dat == null) return null;
-    long low = 0;
-    long high = Size().ToLong() - 1;
-    while(low <= high){
-      long mid = low + (high - low) / 2;
-      Data elem = GetAt(Natural.Of(mid));
-      int cmp = elem.compareTo(dat);
+  public Natural Search(Data data) {
+    if (data == null || headref.IsNull()) return null;
+    long left = 0;
+    long right = Size().ToLong() - 1;
+    Box<LLNode<Data>> base = headref; //? punta al nodo di indice 'left' 
 
-      if(cmp == 0){
-        return Natural.Of(mid);
-      } else if(cmp < 0){
-        low = mid + 1;
-      } else {
-        high = mid - 1;
-      }
+    while (left <= right) {
+      long mid = left + (right - left) / 2;
+      Box<LLNode<Data>> midNode = base;
+
+      for (long i = left; i < mid; i++) { midNode = midNode.Get().GetNext(); }
+
+      int cmp = midNode.Get().Get().compareTo(data);
+      if (cmp == 0) { return Natural.Of(mid); } 
+      else if (cmp < 0) {
+        base = midNode.Get().GetNext();
+        left = mid + 1;
+      } 
+      else {  right = mid - 1; }
     }
+
     return null;
   }
 
@@ -192,14 +196,11 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
       Box<LLNode<Data>> next = curr;
       for (long i = 0; i < step; i++) {
         if (next.IsNull()) break;
-        LLNode<Data> node = next.Get();
-        if (node == null) { next = new Box<>(); break; }
-        next = node.GetNext();
+        next = next.Get().GetNext();
       }
 
       if (next.IsNull()) break;
       LLNode<Data> node = next.Get();
-      if (node == null) break;
 
       int cmp = node.Get().compareTo(data);
       if (cmp < 0) {
@@ -226,14 +227,11 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
       Box<LLNode<Data>> next = curr;
       for (long i = 0; i < step; i++) {
         if (next.IsNull()) break;
-        LLNode<Data> node = next.Get();
-        if (node == null) { next = new Box<>(); break; }
-        next = node.GetNext();
+        next = next.Get().GetNext();
       }
 
       if (next.IsNull()) break;
       LLNode<Data> node = next.Get();
-      if (node == null) break;
 
       int cmp = node.Get().compareTo(data);
       if (cmp > 0) {
@@ -385,10 +383,7 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
 
     LLNode<Data> pred = PredFind(data);
     Box<LLNode<Data>> curr = (pred == null) ? headref : pred.GetNext();
-    if (!curr.IsNull()) {
-      LLNode<Data> currNode = curr.Get();
-      if (currNode != null && currNode.Get().compareTo(data) == 0) return false;
-    }
+    if (!curr.IsNull() && curr.Get().Get().compareTo(data) == 0) return false;
 
     LLNode<Data> next = curr.IsNull() ? null : curr.Get();
     LLNode<Data> newNode = new LLNode<>(data, next);
@@ -410,8 +405,8 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
     while (itr.IsValid()) {
         Box<LLNode<Data>> bItr = itr.GetCurrent();
         LLNode<Data> node = bItr.Get();
-        int cmp = node.Get().compareTo(data);
         
+        int cmp = node.Get().compareTo(data);        
         if (cmp > 0) break;
         if (cmp < 0) {
             prev = node;
@@ -427,8 +422,7 @@ public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChai
             if (next == null) tailref.Set(prev);
             else if (tailref.Get() == node) tailref.Set(next);
 
-            size.Decrement();
-            //? non avanziamo l'iteratore perché punta già al nodo successivo
+            size.Decrement(); //? non avanziamo l'iteratore perché punta già al nodo successivo
         }
     }
   }

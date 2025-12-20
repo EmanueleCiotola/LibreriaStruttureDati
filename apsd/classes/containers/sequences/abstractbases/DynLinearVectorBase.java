@@ -66,7 +66,6 @@ abstract public class DynLinearVectorBase<Data> extends LinearVectorBase<Data> i
   public void Expand(Natural num) {
     if (num == null) throw new NullPointerException("Size cannot be null!");
     long LNum = num.ToLong();
-    if (LNum < 0) throw new IllegalArgumentException("Expand amount cannot be negative!");
 
     Grow(num);
     size += LNum;

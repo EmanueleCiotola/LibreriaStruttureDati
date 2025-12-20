@@ -14,10 +14,7 @@ abstract public class VectorBase<Data> implements Vector<Data> {
   protected Data[] arr;
 
   protected VectorBase() { ArrayAlloc(new Natural(0)); }
-  protected VectorBase(Natural initialSize) {
-    if (initialSize == null) throw new IllegalArgumentException("Initial size cannot be null!");
-    ArrayAlloc(initialSize);
-  }
+  protected VectorBase(Natural initialSize) { ArrayAlloc(initialSize); }
   protected VectorBase(Data[] arr) { this.arr = arr; }
   protected VectorBase(TraversableContainer<Data> container) {
     if (container == null) throw new NullPointerException("Traversable container cannot be null!");
