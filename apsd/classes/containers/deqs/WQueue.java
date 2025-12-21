@@ -12,7 +12,10 @@ public class WQueue<Data> implements Queue<Data> {
   protected final List<Data> list;
 
   public WQueue() { this.list = new VList<Data>(); }
-  public WQueue(List<Data> list) { this.list = list; }
+  public WQueue(List<Data> list) {
+    if (list != null) this.list = list;
+    else this.list = new VList<Data>();
+  }
   public WQueue(TraversableContainer<Data> container) {
     this.list = new VList<>();
     if (container != null) {
@@ -23,7 +26,8 @@ public class WQueue<Data> implements Queue<Data> {
     }
   }
   public WQueue(List<Data> list, TraversableContainer<Data> container) {
-    this.list = list;
+    if (list != null) this.list = list;
+    else this.list = new VList<Data>();
     if (container != null) {
       container.TraverseForward(data -> {
         if (data != null) this.list.InsertLast(data);

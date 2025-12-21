@@ -9,30 +9,38 @@ import apsd.interfaces.containers.collections.Chain;
 public class WSet<Data> extends WSetBase<Data, Chain<Data>> {
 
   public WSet() { super(); }
-  public WSet(Chain<Data> chain) { //TODO
+  public WSet(Chain<Data> chain) {
     super();
-    chain.TraverseForward(data -> {
-      this.chain.InsertIfAbsent(data);
-      return false;
-    });
+    if (chain != null) {
+      chain.TraverseForward(data -> {
+        if (data != null) this.chain.InsertIfAbsent(data);
+        return false;
+      });
+    }
   }
   public WSet(TraversableContainer<Data> container) {
     super();
-    container.TraverseForward(data -> {
-      this.chain.InsertIfAbsent(data);
-      return false;
-    });
+    if (container != null) {
+      container.TraverseForward(data -> {
+        if (data != null) this.chain.InsertIfAbsent(data);
+        return false;
+      });
+    }
   }
-  public WSet(Chain<Data> chain, TraversableContainer<Data> container) { //TODO
+  public WSet(Chain<Data> chain, TraversableContainer<Data> container) {
     super();
-    chain.TraverseForward(data -> {
-      this.chain.InsertIfAbsent(data);
-      return false;
-    });
-    container.TraverseForward(data -> {
-      this.chain.InsertIfAbsent(data);
-      return false;
-    });
+    if (chain != null) {
+      chain.TraverseForward(data -> {
+        if (data != null) this.chain.InsertIfAbsent(data);
+        return false;
+      });
+    }
+    if (container != null) {
+      container.TraverseForward(data -> {
+        if (data != null) this.chain.InsertIfAbsent(data);
+        return false;
+      });
+    }
   }
 
   @Override

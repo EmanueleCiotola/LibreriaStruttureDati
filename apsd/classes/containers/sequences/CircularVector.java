@@ -15,13 +15,15 @@ public class CircularVector<Data> extends CircularVectorBase<Data> {
     for (int i = 0; i < arr.length; i++) { this.arr[i] = arr[i]; }
   }
   public CircularVector(TraversableContainer<Data> container) {
-    super(Natural.Of(container.Size().ToLong()));
-    Box<Natural> index = new Box<>(Natural.ZERO);
-    container.TraverseForward(data -> {
-      SetAt(data, index.Get());
-      index.Set(index.Get().Increment());
-      return false;
-    });
+    super(container != null ? Natural.Of(container.Size().ToLong()) : Natural.ZERO);
+    if (container != null) {
+      Box<Natural> index = new Box<>(Natural.ZERO);
+      container.TraverseForward(data -> {
+        SetAt(data, index.Get());
+        index.Set(index.Get().Increment());
+        return false;
+      });
+    }
   }
 
   @Override

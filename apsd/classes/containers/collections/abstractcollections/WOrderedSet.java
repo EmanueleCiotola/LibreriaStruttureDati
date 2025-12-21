@@ -13,34 +13,42 @@ public class WOrderedSet<Data extends Comparable<? super Data>> extends WOrdered
 
   public WOrderedSet(Chain<Data> chain) {
     super();
-    this.chain = new VSortedChain<Data>(chain);
+    if (chain != null) this.chain = new VSortedChain<Data>(chain);
   }
   public WOrderedSet(SortedChain<Data> chain) {
     super();
-    this.chain = chain;
+    if (chain != null) this.chain = chain;
   }
   public WOrderedSet(TraversableContainer<Data> container) {
     super();
-    container.TraverseForward(data -> {
-      this.chain.InsertIfAbsent(data);
-      return false;
-    });
+    if (container != null) {
+      container.TraverseForward(data -> {
+        if (data != null) this.chain.InsertIfAbsent(data);
+        return false;
+      });
+    }
   }
   public WOrderedSet(SortedChain<Data> chain, TraversableContainer<Data> container) {
     super();
-    this.chain = chain;
-    container.TraverseForward(data -> {
-      this.chain.InsertIfAbsent(data);
-      return false;
-    });
+    if (chain != null) this.chain = chain;
+    if (container != null) {
+      container.TraverseForward(data -> {
+        if (data != null) this.chain.InsertIfAbsent(data);
+        return false;
+      });
+    }
   }
   public WOrderedSet(Chain<Data> chain, TraversableContainer<Data> container) {
     super();
-    this.chain = new VSortedChain<Data>(chain);
-    container.TraverseForward(data -> {
-      this.chain.InsertIfAbsent(data);
-      return false;
-    });
+    if (chain != null) {
+      this.chain = new VSortedChain<Data>(chain);
+    }
+    if (container != null) {
+      container.TraverseForward(data -> {
+        if (data != null) this.chain.InsertIfAbsent(data);
+        return false;
+      });
+    }
   }
 
   @Override
