@@ -26,7 +26,7 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
     tailref.Set(null);
   }
   public LLChainBase(TraversableContainer<Data> container) {
-    size.Assign(container.Size());
+    size.Assign(0L);
     final Box<Boolean> isFirstNode = new Box<>(true);
 
     container.TraverseForward(data -> {
@@ -37,6 +37,7 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
       } else tailref.Get().SetNext(node);
       
       tailref.Set(node);
+      size.Increment();
       return false;
     });
   }
@@ -369,7 +370,7 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
 
   @Override
   public boolean Filter(Predicate<Data> pred) {
-    if (pred == null) throw new IllegalArgumentException("Predicate cannot be null");
+    if (pred == null) return false;
     long oldSize = size.ToLong();
 
     ForwardIterator<Box<LLNode<Data>>> itr = FRefIterator();

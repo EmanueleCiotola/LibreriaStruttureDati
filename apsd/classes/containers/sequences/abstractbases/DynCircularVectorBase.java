@@ -39,6 +39,7 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
 
   @Override
   public void Realloc(Natural newCapacity) {
+    if (newCapacity == null) return;
     long oldSize = size;
     super.Realloc(newCapacity);
     size = oldSize;
@@ -51,7 +52,7 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
 
   @Override
   public void Expand(Natural num) {
-    if (num == null) throw new NullPointerException("Size cannot be null!");
+    if (num == null) return;
     long LNum = num.ToLong();
 
     Grow(num);
@@ -60,7 +61,7 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
 
   @Override
   public void Reduce(Natural num) {
-    if (num == null) throw new NullPointerException("Size cannot be null!");
+    if (num == null) return;
     long LNum = num.ToLong();
     if (LNum > size)  throw new IllegalArgumentException("Reduce cannot be bigger than size!");
 

@@ -21,7 +21,7 @@ abstract public class CircularVectorBase<Data> extends VectorBase<Data> {
 
   @Override
   public void Realloc(Natural newCapacity) {
-    if (newCapacity == null) throw new NullPointerException("Natural cannot be null!");
+    if (newCapacity == null) return;
     Data[] oldArr = arr;
     long oldStart = start;
     long minSize = Math.min(Size().ToLong(), newCapacity.ToLong());

@@ -13,7 +13,7 @@ abstract public class LinearVectorBase<Data> extends VectorBase<Data> {
 
   @Override
   public void Realloc(Natural newCapacity) {
-    if (newCapacity == null) throw new NullPointerException("Natural cannot be null!");
+    if (newCapacity == null) return;
     Data[] oldArr = arr;
     int minSize = (int) Math.min(Capacity().ToLong(), newCapacity.ToLong());
     ArrayAlloc(newCapacity);

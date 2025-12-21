@@ -79,7 +79,7 @@ abstract public class VChainBase<Data> implements Chain<Data> {
 
   @Override
   public boolean Filter(Predicate<Data> pred) {
-    if (pred == null) throw new IllegalArgumentException("Predicate cannot be null");
+    if (pred == null) return false;
     MutableForwardIterator<Data> readItr = vec.FIterator();
     MutableForwardIterator<Data> writeItr = vec.FIterator();
     boolean changed = false;
