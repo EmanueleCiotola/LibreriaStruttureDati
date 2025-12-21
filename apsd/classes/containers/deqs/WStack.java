@@ -13,14 +13,23 @@ public class WStack<Data> implements Stack<Data> {
 
   public WStack() { this.list = new VList<Data>(); }
   public WStack(List<Data> list) { this.list = list; }
-  public WStack(TraversableContainer<Data> con) { this.list = new VList<Data>(con); }
-  public WStack(List<Data> list, TraversableContainer<Data> container) { //TODO
-    this(list != null ? list : new VList<Data>());
-    if (container == null) return;
-    container.TraverseForward(data -> {
-      if (data != null) this.list.InsertLast(data);
-      return false;
-    });
+  public WStack(TraversableContainer<Data> con) {
+    this.list = new VList<Data>();
+    if (con != null) {
+      con.TraverseForward(data -> {
+        if (data != null) this.list.InsertLast(data);
+        return false;
+      });
+    }
+  }
+  public WStack(List<Data> list, TraversableContainer<Data> con) {
+    this.list = list;
+    if (con != null) {
+      con.TraverseForward(data -> {
+        if (data != null) this.list.InsertLast(data);
+        return false;
+      });
+    }
   }
 
   /* ************************************************************************ */
