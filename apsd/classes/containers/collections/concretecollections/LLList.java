@@ -37,20 +37,20 @@ public class LLList<Data> extends LLChainBase<Data> implements List<Data> {
   /* ************************************************************************ */
   @Override
   public void SetAt(Data data, Natural index) {
-    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
+    if (data == null) return;
     List.super.SetAt(data, index);
   }
 
   @Override
   public void SetFirst(Data data) {
-    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
+    if (data == null) return;
     if (headref.IsNull()) throw new IndexOutOfBoundsException("First element does not exist!");
     headref.Get().Set(data);
   }
 
   @Override
   public void SetLast(Data data) {
-    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
+    if (data == null) return;
     if (tailref.IsNull()) throw new IndexOutOfBoundsException("Last element does not exist!");
     tailref.Get().Set(data);
   }
@@ -66,7 +66,8 @@ public class LLList<Data> extends LLChainBase<Data> implements List<Data> {
 
   @Override
   public void InsertAt(Data data, Natural position) {
-    if (position == null) throw new IllegalArgumentException("Position cannot be null!");
+    if (data == null) return;
+    if (position == null) throw new NullPointerException("Position cannot be null!");
     long LPosition = position.ToLong();
     long LSize = size.ToLong();
     if (LPosition > LSize) throw new IndexOutOfBoundsException("Index out of bounds: " + LPosition + "; Size: " + LSize + "!");
@@ -83,7 +84,7 @@ public class LLList<Data> extends LLChainBase<Data> implements List<Data> {
 
   @Override
   public void InsertFirst(Data data) {
-    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
+    if (data == null) return;
     LLNode<Data> node = new LLNode<>(data);
     if (headref.IsNull()) {
       headref.Set(node);
@@ -97,7 +98,7 @@ public class LLList<Data> extends LLChainBase<Data> implements List<Data> {
 
   @Override
   public void InsertLast(Data data) {
-    if (data == null) throw new IllegalArgumentException("Data cannot be null!");
+    if (data == null) return;
     LLNode<Data> node = new LLNode<>(data);
     if (tailref.IsNull()) {
       headref.Set(node);

@@ -12,17 +12,21 @@ public interface IterableContainer<Data> extends TraversableContainer<Data> {
   BackwardIterator<Data> BIterator();
 
   default boolean IsEqual(IterableContainer<Data> other) {
-    if (other == null || !Size().equals(other.Size())) return false;
+    if (other == null) return false;
     if (this == other) return true;
+    if (this.Size().compareTo(other.Size()) != 0) return false;
 
-    ForwardIterator<Data> it1 = FIterator();
+    ForwardIterator<Data> it1 = this.FIterator();
     ForwardIterator<Data> it2 = other.FIterator();
 
     while (it1.IsValid() && it2.IsValid()) {
-      if (!it1.DataNNext().equals(it2.DataNNext())) return false;
+      Data data1 = it1.DataNNext();
+      Data data2 = it2.DataNNext();
+
+      if ((data1 == null && data2 != null) || (data1 != null && !data1.equals(data2))) return false;
     }
-    
-    return true;
+
+    return true; 
   }
 
   /* ************************************************************************ */

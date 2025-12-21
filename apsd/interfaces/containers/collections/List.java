@@ -19,8 +19,10 @@ public interface List<Data> extends MutableSequence<Data>, InsertableAtSequence<
   
   @Override
   default boolean Insert(Data data) {
-    InsertFirst(data); //TODO verifica se conviene InsertLast (causa due errori)
-    return true;
+    if (data == null) return false;
+    long oldSize = Size().ToLong();
+    InsertFirst(data);
+    return Size().ToLong() > oldSize;
   }
 
 }

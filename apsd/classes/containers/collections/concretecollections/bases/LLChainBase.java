@@ -20,23 +20,25 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
   protected final Box<LLNode<Data>> headref = new Box<>();
   protected final Box<LLNode<Data>> tailref = new Box<>();
 
-  public LLChainBase() {}
-  public LLChainBase(TraversableContainer<Data> container) {
-    if (container == null) return;
-    LLNode<Data> headPred = new LLNode<>(null);
-    tailref.Set(headPred); 
-
-    container.TraverseForward(data -> {
-        if (data == null) throw new IllegalArgumentException("Cannot add null data");
-        LLNode<Data> node = new LLNode<>(data);
-        tailref.Get().SetNext(node);
-        tailref.Set(node);
-        size.Increment();
-        return false;
-    });
+  public LLChainBase() {
+    size.Assign(0L);
+    headref.Set(null);
+    tailref.Set(null);
+  }
+  public LLChainBase(TraversableContainer<Data> container) { //TODO di Ezio, da rivedere
+    size.Assign(container.Size());
+    final Box<Boolean> first = new Box<>(true);
     
-    if (size.IsZero()) tailref.Set(null);
-    else headref.Set(headPred.GetNext().Get());
+    container.TraverseForward(dat -> {
+      LLNode<Data> node = new LLNode<>(dat);
+      if (first.Get()) {
+        headref.Set(node);
+        first.Set(false);
+      } else tailref.Get().SetNext(node);
+
+      tailref.Set(node);
+      return false;
+    });
   }
   protected LLChainBase(long size, LLNode<Data> head, LLNode<Data> tail) {
     this.size.Assign(size);

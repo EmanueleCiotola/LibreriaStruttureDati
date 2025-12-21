@@ -35,7 +35,10 @@ public class VList<Data> extends VChainBase<Data> implements List<Data> {
   /* ************************************************************************ */
 
   @Override
-  public void SetAt(Data data, Natural position) { vec.SetAt(data, position); }
+  public void SetAt(Data data, Natural position) { 
+    if (data == null) return;
+    vec.SetAt(data, position); 
+  }
 
   @Override
   public MutableSequence<Data> SubSequence(Natural from, Natural to) { return (MutableSequence<Data>) vec.SubVector(from, to); }
@@ -45,6 +48,9 @@ public class VList<Data> extends VChainBase<Data> implements List<Data> {
   /* ************************************************************************ */
 
   @Override
-  public void InsertAt(Data data, Natural position) { vec.InsertAt(data, position); }
+  public void InsertAt(Data data, Natural position) { 
+    if (data == null) return;
+    vec.InsertAt(data, position); 
+  }
 
 }

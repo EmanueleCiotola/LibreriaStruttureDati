@@ -55,6 +55,7 @@ public interface Stack<Data> extends ClearableContainer, InsertableContainer<Dat
   
   @Override
   default boolean Insert(Data data) {
+    if (data == null) return false;
     Push(data);
     return true;
   }
