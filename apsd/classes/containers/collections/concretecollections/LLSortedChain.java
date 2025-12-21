@@ -12,8 +12,17 @@ import apsd.interfaces.containers.iterators.ForwardIterator;
 public class LLSortedChain<Data extends Comparable<? super Data>> extends LLChainBase<Data> implements SortedChain<Data> {
 
   public LLSortedChain() { super(); }
-  public LLSortedChain(TraversableContainer<Data> container) { super(container); }
-  public LLSortedChain(LLSortedChain<Data> chain) { super(chain); }
+  public LLSortedChain(LLSortedChain<Data> chain) {
+    super();
+    InsertAll(chain);
+  }
+  public LLSortedChain(TraversableContainer<Data> container) {
+    super();
+    container.TraverseForward(data -> {
+      InsertIfAbsent(data);
+      return false;
+    });
+  }
   protected LLSortedChain(long size, LLNode<Data> head, LLNode<Data> tail) { super(size, head, tail); }
 
   @Override

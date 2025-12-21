@@ -1,7 +1,6 @@
 package apsd.classes.containers.sequences.abstractbases;
 
 import apsd.classes.utilities.Natural;
-import apsd.interfaces.containers.base.TraversableContainer;
 import apsd.interfaces.containers.sequences.DynVector;
 
 /** Object: Abstract dynamic circular vector base implementation. */
@@ -9,19 +8,7 @@ abstract public class DynCircularVectorBase<Data> extends CircularVectorBase<Dat
 
   protected long size = 0L;
 
-  public DynCircularVectorBase(){ super(); }
-  public DynCircularVectorBase(Natural initialSize){
-    super(initialSize);
-    this.size = initialSize.ToLong();
-  }
-  public DynCircularVectorBase(Data[] arr) {
-    super(arr);
-    this.size = arr.length;
-  }
-  public DynCircularVectorBase(TraversableContainer<Data> container){
-    super(container);
-    this.size = container.Size().ToLong();
-  }
+  protected DynCircularVectorBase(Natural capacity) { super(capacity); }
 
   @Override
   protected void ArrayAlloc(Natural newSize) {

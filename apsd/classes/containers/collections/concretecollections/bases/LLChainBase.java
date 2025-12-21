@@ -20,30 +20,30 @@ abstract public class LLChainBase<Data> implements Chain<Data> {
   protected final Box<LLNode<Data>> headref = new Box<>();
   protected final Box<LLNode<Data>> tailref = new Box<>();
 
-  public LLChainBase() {
+  protected LLChainBase() {
     size.Assign(0L);
     headref.Set(null);
     tailref.Set(null);
   }
-  public LLChainBase(TraversableContainer<Data> container) { //TODO di Ezio, da rivedere
+  public LLChainBase(TraversableContainer<Data> container) {
     size.Assign(container.Size());
-    final Box<Boolean> first = new Box<>(true);
-    
-    container.TraverseForward(dat -> {
-      LLNode<Data> node = new LLNode<>(dat);
-      if (first.Get()) {
-        headref.Set(node);
-        first.Set(false);
-      } else tailref.Get().SetNext(node);
+    final Box<Boolean> isFirstNode = new Box<>(true);
 
+    container.TraverseForward(data -> {
+      LLNode<Data> node = new LLNode<>(data);
+      if (isFirstNode.Get()) {
+        headref.Set(node);
+        isFirstNode.Set(false);
+      } else tailref.Get().SetNext(node);
+      
       tailref.Set(node);
       return false;
     });
   }
-  protected LLChainBase(long size, LLNode<Data> head, LLNode<Data> tail) {
+   protected LLChainBase(long size, LLNode<Data> head, LLNode<Data> tail) {
     this.size.Assign(size);
-    headref.Set(head);
-    tailref.Set(tail);
+    this.headref.Set(head);
+    this.tailref.Set(tail);
   }
 
   abstract protected LLChainBase<Data> NewChain(long size, LLNode<Data> head, LLNode<Data> tail);

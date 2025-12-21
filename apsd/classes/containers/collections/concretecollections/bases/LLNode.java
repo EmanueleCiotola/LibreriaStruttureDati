@@ -7,18 +7,18 @@ import java.util.Objects;
 /** Object: Represents a mutable linked-list node for a value of type Data. */
 public class LLNode<Data> implements MutableReference<Data> {
 
-  protected Data dat = null;
+  protected Data data = null;
   protected Box<LLNode<Data>> next = new Box<>();
 
   public LLNode() {}
-  public LLNode(Data dat) { this.dat = dat; }
-  public LLNode(Data dat, LLNode<Data> nextnode) {
-    this(dat);
+  public LLNode(Data data) { this.data = data; }
+  public LLNode(Data data, LLNode<Data> nextnode) {
+    this(data);
     next.Set(nextnode);
   }
   public LLNode(LLNode<Data> node) {
     if (node == null) { throw new NullPointerException("LLNode cannot be null!"); }
-    dat = node.dat;
+    data = node.data;
     next.Set(new LLNode<>(node.next.Get()));
   }
 
@@ -35,14 +35,14 @@ public class LLNode<Data> implements MutableReference<Data> {
   /* ************************************************************************ */
 
   @Override
-  public Data Get() { return dat; }
+  public Data Get() { return data; }
 
   /* ************************************************************************ */
   /* Override specific member functions from MutableReference                 */
   /* ************************************************************************ */
 
   @Override
-  public void Set(Data dat) { this.dat = dat; }
+  public void Set(Data data) { this.data = data; }
 
   /* ************************************************************************ */
   /* Override specific member functions from Object                           */
@@ -50,19 +50,19 @@ public class LLNode<Data> implements MutableReference<Data> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(dat, next.Get());
+    return Objects.hash(data, next.Get());
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (!(obj instanceof LLNode<?> node)) return false;
-    return (next.Get() == node.next.Get() && Objects.equals(dat, node.dat));
+    return (next.Get() == node.next.Get() && Objects.equals(data, node.data));
   }
 
   @Override
   public String toString() {
-    return "LLNode(data: " + dat + "; next: " + next + " )";
+    return "LLNode(data: " + data + "; next: " + next + " )";
   }
 
 }

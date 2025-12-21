@@ -1,8 +1,6 @@
 package apsd.classes.containers.sequences.abstractbases;
 
-import apsd.classes.utilities.MutableNatural;
 import apsd.classes.utilities.Natural;
-import apsd.interfaces.containers.base.TraversableContainer;
 import apsd.interfaces.containers.iterators.MutableBackwardIterator;
 import apsd.interfaces.containers.iterators.MutableForwardIterator;
 import apsd.interfaces.containers.sequences.MutableSequence;
@@ -13,14 +11,9 @@ abstract public class VectorBase<Data> implements Vector<Data> {
 
   protected Data[] arr;
 
-  protected VectorBase() { ArrayAlloc(new Natural(0)); }
-  protected VectorBase(Natural initialSize) { ArrayAlloc(initialSize); }
-  protected VectorBase(Data[] arr) { this.arr = arr; }
-  protected VectorBase(TraversableContainer<Data> container) {
-    if (container == null) throw new NullPointerException("Traversable container cannot be null!");
-    ArrayAlloc(container.Size());
-    final MutableNatural index = new MutableNatural();
-    container.TraverseForward(data -> {SetAt(data, index.GetNIncrement()); return false; });
+  protected VectorBase(Natural size) {
+    if (size == null) { throw new IllegalArgumentException("Invalid argument: size cannot be null!"); }
+    ArrayAlloc(size);
   }
 
   protected abstract VectorBase<Data> NewVector(Data[] arr);

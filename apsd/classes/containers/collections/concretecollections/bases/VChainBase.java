@@ -2,7 +2,6 @@ package apsd.classes.containers.collections.concretecollections.bases;
 
 import apsd.classes.containers.sequences.DynCircularVector;
 import apsd.classes.utilities.Natural;
-import apsd.interfaces.containers.base.TraversableContainer;
 import apsd.interfaces.containers.collections.Chain;
 import apsd.interfaces.containers.iterators.BackwardIterator;
 import apsd.interfaces.containers.iterators.ForwardIterator;
@@ -16,9 +15,7 @@ abstract public class VChainBase<Data> implements Chain<Data> {
 
   protected final DynVector<Data> vec;
 
-  protected VChainBase() { vec = new DynCircularVector<>(); }
-  protected VChainBase(DynVector<Data> vec) { this.vec = vec; }
-  public VChainBase(TraversableContainer<Data> container) { vec = new DynCircularVector<>(container); }
+  protected VChainBase() { this.vec = new DynCircularVector<>(); }
   
   protected abstract VChainBase<Data> NewChain(DynVector<Data> vec);
 

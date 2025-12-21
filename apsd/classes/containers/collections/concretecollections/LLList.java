@@ -15,10 +15,15 @@ import apsd.interfaces.containers.sequences.MutableSequence;
 public class LLList<Data> extends LLChainBase<Data> implements List<Data> {
 
   public LLList() { super(); }
-  public LLList(TraversableContainer<Data> container) { super(container); }
+  public LLList(TraversableContainer<Data> container) {
+    super();
+    container.TraverseForward(data -> {
+      if (data != null) InsertLast(data);
+      return false;
+    });
+  }
   protected LLList(long size, LLNode<Data> head, LLNode<Data> tail) { super(size, head, tail); }
 
-  // NewChain
   @Override
   protected LLChainBase<Data> NewChain(long size, LLNode<Data> head, LLNode<Data> tail) { return new LLList<Data>(size, head, tail); }
 

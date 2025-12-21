@@ -1,7 +1,6 @@
 package apsd.classes.containers.collections.abstractcollections.bases;
 
 import apsd.classes.utilities.Natural;
-import apsd.interfaces.containers.base.TraversableContainer;
 import apsd.interfaces.containers.collections.Chain;
 import apsd.interfaces.containers.collections.Set;
 import apsd.interfaces.containers.iterators.BackwardIterator;
@@ -13,22 +12,7 @@ abstract public class WSetBase<Data, chain extends Chain<Data>> implements Set<D
 
   protected chain chain;
 
-  public WSetBase() { ChainAlloc(); }
-  public WSetBase(chain chain) { this.chain = chain; }
-  public WSetBase(TraversableContainer<Data> container) {
-    ChainAlloc();
-    container.TraverseForward(data -> {
-      chain.InsertIfAbsent(data);
-      return false;
-    });
-  }
-  public WSetBase(chain chain, TraversableContainer<Data> container) {
-    this.chain = chain;
-    container.TraverseForward(data -> {
-      this.chain.InsertIfAbsent(data);
-      return false;
-    });
-  }
+  protected WSetBase() { ChainAlloc(); }
 
   abstract protected void ChainAlloc();
 

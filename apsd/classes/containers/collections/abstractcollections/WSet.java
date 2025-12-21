@@ -2,6 +2,7 @@ package apsd.classes.containers.collections.abstractcollections;
 
 import apsd.classes.containers.collections.abstractcollections.bases.WSetBase;
 import apsd.classes.containers.collections.concretecollections.VList;
+import apsd.classes.utilities.Natural;
 import apsd.interfaces.containers.base.TraversableContainer;
 import apsd.interfaces.containers.collections.Chain;
 
@@ -9,9 +10,35 @@ import apsd.interfaces.containers.collections.Chain;
 public class WSet<Data> extends WSetBase<Data, Chain<Data>> {
 
   public WSet() { super(); }
-  public WSet(Chain<Data> chain) { super(chain); }
-  public WSet(TraversableContainer<Data> container) { super(container); }
-  public WSet(Chain<Data> chain, TraversableContainer<Data> container) { super(chain, container); }
+  public WSet(Chain<Data> chain) {
+    super();
+    this.chain = (Chain<Data>) chain.SubSequence(Natural.ONE, Natural.ZERO);
+    chain.TraverseForward(data -> {
+      this.chain.InsertIfAbsent(data);
+      return false;
+    });
+  }
+
+  public WSet(TraversableContainer<Data> container) {
+    super();
+    container.TraverseForward(data -> {
+      this.chain.InsertIfAbsent(data);
+      return false;
+    });
+  }
+
+  public WSet(Chain<Data> chain, TraversableContainer<Data> container) {
+    super();
+    this.chain = (Chain<Data>) chain.SubSequence(Natural.ONE, Natural.ZERO);
+    chain.TraverseForward(data -> {
+      this.chain.InsertIfAbsent(data);
+      return false;
+    });
+    container.TraverseForward(data -> {
+      this.chain.InsertIfAbsent(data);
+      return false;
+    });
+  }
 
   @Override
   protected void ChainAlloc() { chain = new VList<>(); }

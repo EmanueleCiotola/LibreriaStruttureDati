@@ -10,9 +10,24 @@ import apsd.interfaces.containers.sequences.DynVector;
 public class VSortedChain<Data extends Comparable<? super Data>> extends VChainBase<Data> implements SortedChain<Data> {
 
   public VSortedChain() { super(); }
-  public VSortedChain(TraversableContainer<Data> container) { super(container); }
-  public VSortedChain(VSortedChain<Data> chain) { super(chain.vec); }
-  protected VSortedChain(DynVector<Data> vec) { super(vec); }
+  public VSortedChain(VSortedChain<Data> chain) {
+    super();
+    InsertAll(chain);
+  }
+  protected VSortedChain(DynVector<Data> vec) {
+    super();
+    vec.TraverseForward(data -> {
+      InsertIfAbsent(data);
+      return false;
+    });
+  }
+  public VSortedChain(TraversableContainer<Data> container) {
+    super();
+    container.TraverseForward(data -> {
+      InsertIfAbsent(data);
+      return false;
+    });
+  }
 
   @Override
   protected VChainBase<Data> NewChain(DynVector<Data> vec) { return new VSortedChain<>(vec); }

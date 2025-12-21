@@ -1,17 +1,13 @@
 package apsd.classes.containers.collections.abstractcollections.bases;
 
 import apsd.interfaces.containers.base.IterableContainer;
-import apsd.interfaces.containers.base.TraversableContainer;
 import apsd.interfaces.containers.collections.OrderedSet;
 import apsd.interfaces.containers.collections.SortedChain;
 
 /** Object: Abstract wrapper set base implementation via chain. */
 abstract public class WOrderedSetBase<Data extends Comparable<? super Data>, Chain extends SortedChain<Data>> extends WSetBase<Data, Chain> implements OrderedSet<Data> {
   
-  public WOrderedSetBase() { super(); }
-  public WOrderedSetBase(Chain chain) { super(chain); }
-  public WOrderedSetBase(TraversableContainer<Data> container) { super(container); }
-  public WOrderedSetBase(Chain chain, TraversableContainer<Data> container) { super(chain, container); }
+  protected WOrderedSetBase() { super(); }
 
   /* ************************************************************************ */
   /* Override specific member functions from IterableContainer                */

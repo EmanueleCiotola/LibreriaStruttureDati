@@ -11,12 +11,15 @@ public class WStack<Data> implements Stack<Data> {
 
   protected final List<Data> list;
 
-  public WStack() { this.list = new VList<>(); }
+  public WStack() { this.list = new VList<Data>(); }
   public WStack(List<Data> list) { this.list = list; }
-  public WStack(TraversableContainer<Data> container) { this.list = new VList<>(container); }
+  public WStack(TraversableContainer<Data> con) { this.list = new VList<Data>(con); }
   public WStack(List<Data> list, TraversableContainer<Data> container) {
-    this.list = list;
-    container.TraverseForward(data -> { this.list.InsertLast(data); return false; });
+    this.list = (List<Data>) list.SubSequence(Natural.ONE, Natural.ZERO);
+    container.TraverseForward(data -> {
+      this.list.InsertLast(data);
+      return false;
+    });
   }
 
   /* ************************************************************************ */

@@ -1,6 +1,7 @@
 package apsd.classes.containers.collections.concretecollections;
 
 import apsd.classes.containers.collections.concretecollections.bases.VChainBase;
+import apsd.classes.utilities.MutableNatural;
 import apsd.classes.utilities.Natural;
 import apsd.interfaces.containers.base.TraversableContainer;
 import apsd.interfaces.containers.collections.List;
@@ -13,10 +14,23 @@ import apsd.interfaces.containers.sequences.MutableSequence;
 public class VList<Data> extends VChainBase<Data> implements List<Data> {
 
   public VList() { super(); }
-  public VList(TraversableContainer<Data> container) { super(container); }
-  protected VList(DynVector<Data> vec) { super(vec); }
+  protected VList(DynVector<Data> vec) {
+    super();
+    MutableNatural index = new MutableNatural(0L);
+    vec.TraverseForward(data -> {
+      this.vec.InsertAt(data, index.GetNIncrement());
+      return false;
+    });
+  }
+  public VList(TraversableContainer<Data> container) {
+    super();
+    MutableNatural index = new MutableNatural(0L);
+    container.TraverseForward(data -> {
+      vec.InsertAt(data, index.GetNIncrement());
+      return false;
+    });
+  }
 
-  // NewChain
   @Override
   protected VChainBase<Data> NewChain(DynVector<Data> vec) { return new VList<>(vec); }
 
