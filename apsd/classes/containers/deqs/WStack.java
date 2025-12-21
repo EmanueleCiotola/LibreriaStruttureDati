@@ -12,24 +12,12 @@ public class WStack<Data> implements Stack<Data> {
   protected final List<Data> list;
 
   public WStack() { this.list = new VList<Data>(); }
-  public WStack(List<Data> list) {
-    this.list = new VList<Data>();
-    list.TraverseForward(data -> {
-      this.list.InsertFirst(data);
-      return false;
-    });
-  }
-  public WStack(TraversableContainer<Data> container) {
-    this.list = new VList<Data>();
-    container.TraverseForward(data -> {
-      this.list.InsertFirst(data);
-      return false;
-    });
-  }
-  public WStack(List<Data> list, TraversableContainer<Data> container) {
+  public WStack(List<Data> list) { this.list = list; }
+  public WStack(TraversableContainer<Data> con) { this.list = new VList<Data>(con); }
+  public WStack(List<Data> list, TraversableContainer<Data> container) { //TODO
     this(list);
     container.TraverseForward(data -> {
-      this.list.InsertFirst(data);
+      this.list.InsertLast(data);
       return false;
     });
   }
@@ -55,31 +43,36 @@ public class WStack<Data> implements Stack<Data> {
   @Override
   public Data Top() {
     if (list.IsEmpty()) return null;
-    return list.GetLast();
+    return list.GetFirst();
   }
 
   @Override
-  public void Pop() { list.RemoveLast(); }
+  public void Pop() {
+    if (list.IsEmpty()) return;
+    list.RemoveFirst();
+  }
 
   @Override
-  public Data TopNPop() { return list.LastNRemove(); }
+  public Data TopNPop() {
+    Data top = Top();
+    Pop();
+    return top;
+  }
 
   @Override
   public void SwapTop(Data data) {
-    if (list.IsEmpty()) { Push(data); return; }
-    list.SetLast(data);
+    if (!list.IsEmpty()) { Pop(); }
+    Push(data);
   }
 
   @Override
   public Data TopNSwap(Data data) {
-    if (list.IsEmpty()) {
-      Push(data);
-      return null;
-    }
-    return list.GetNSetLast(data);
+    Data top = Top();
+    SwapTop(data);
+    return top;
   }
 
   @Override
-  public void Push(Data data) { list.InsertLast(data); }
+  public void Push(Data data) { list.InsertFirst(data); }
 
 }

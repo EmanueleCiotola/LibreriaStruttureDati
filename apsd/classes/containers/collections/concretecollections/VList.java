@@ -18,7 +18,7 @@ public class VList<Data> extends VChainBase<Data> implements List<Data> {
     super();
     MutableNatural index = new MutableNatural(0L);
     vec.TraverseForward(data -> {
-      this.vec.InsertAt(data, index.GetNIncrement());
+      if (data != null) this.vec.InsertAt(data, index.GetNIncrement());
       return false;
     });
   }
@@ -26,7 +26,7 @@ public class VList<Data> extends VChainBase<Data> implements List<Data> {
     super();
     MutableNatural index = new MutableNatural(0L);
     container.TraverseForward(data -> {
-      vec.InsertAt(data, index.GetNIncrement());
+      if (data != null) vec.InsertAt(data, index.GetNIncrement());
       return false;
     });
   }
@@ -55,7 +55,7 @@ public class VList<Data> extends VChainBase<Data> implements List<Data> {
   }
 
   @Override
-  public MutableSequence<Data> SubSequence(Natural from, Natural to) { return (MutableSequence<Data>) vec.SubVector(from, to); }
+  public MutableSequence<Data> SubSequence(Natural from, Natural to) { return (MutableSequence<Data>) super.SubSequence(from, to); }
 
   /* ************************************************************************ */
   /* Override specific member functions from InsertableAtSequence             */

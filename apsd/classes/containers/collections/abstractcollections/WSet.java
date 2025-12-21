@@ -9,7 +9,7 @@ import apsd.interfaces.containers.collections.Chain;
 public class WSet<Data> extends WSetBase<Data, Chain<Data>> {
 
   public WSet() { super(); }
-  public WSet(Chain<Data> chain) {
+  public WSet(Chain<Data> chain) { //TODO
     super();
     chain.TraverseForward(data -> {
       this.chain.InsertIfAbsent(data);
@@ -23,7 +23,7 @@ public class WSet<Data> extends WSetBase<Data, Chain<Data>> {
       return false;
     });
   }
-  public WSet(Chain<Data> chain, TraversableContainer<Data> container) {
+  public WSet(Chain<Data> chain, TraversableContainer<Data> container) { //TODO
     super();
     chain.TraverseForward(data -> {
       this.chain.InsertIfAbsent(data);

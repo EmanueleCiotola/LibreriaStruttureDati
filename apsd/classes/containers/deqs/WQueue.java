@@ -14,7 +14,7 @@ public class WQueue<Data> implements Queue<Data> {
   public WQueue() { this.list = new VList<Data>(); }
   public WQueue(List<Data> list) { this.list = list; }
   public WQueue(TraversableContainer<Data> container) { this.list = new VList<Data>(container); }
-  public WQueue(List<Data> list, TraversableContainer<Data> container) {
+  public WQueue(List<Data> list, TraversableContainer<Data> container) { //TODO
     this(list);
     container.TraverseForward(data -> {
       this.list.InsertLast(data);
